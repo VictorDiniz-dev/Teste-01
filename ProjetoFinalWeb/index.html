@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+    <title>Projeto Final Construção Web</title>
+</head>
+<body id="topo">
+    <header class="começo">
+        <nav class="meu-menu">
+            <h3>Menu</h3>
+                <ul>
+                    <li><a href="#topo" class="botao-menu">Inicio</a></li>
+                    <li><a href="#galeria" class="botao-menu">Peças</a></li>
+                    <li><a href="#pós-montagem" class="botao-menu">Pos-Montagem</a></li>
+                </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="home">
+            <section id="imagemzona" class="imagem"> 
+                <h1>Como montar seu primeiro PC</h1>
+                <img src="img/unreal-preto-site-1-2_640x640+fill_ffffff.jpg" alt="PC Gamer" class="imagempc">
+                <h2>Antes de apertar o primeiro parafuso, você precisa de um plano. Montar um PC é um investimento
+                    , e errar na escolha das peças pode custar caro ou gerar gargalos no desempenho, para isso
+                    separamos carinhosamente um guia de como voce pode montar seu primeiro computador.</h2>  
+            </section>
+        </div>
+        <hr>
+  
+        <br><br><br>
+        <h1>Como se planejar?</h1>
+      
+        <div class="texto">
+            <div class="conteudo-escrito">
+                <h4>O basico :</h4>
+                <p>
+                    Para planejar antes é necessario estabelecer alguns parametros como, o que eu vou rodar nesse PC ?
+                    Caso voce queira o computador para estudos comuns, ou jogos leves (Como Valorant ou Lol) o seu orçamento
+                    nao precisa ser tão alto, é possivel estabelecer essa meta com preços mais baixos.
+                </p>
+        
+                <h4>Se for para edição ou jogos pesados:</h4>
+                <p>
+                    Se for para edição de video ou jogos pesados em resoluções mais altas, seu foco muda. 
+                    Planeje e defina um orçamento maximo e caso necessario, reserve uma parte especifica 
+                    para periférico como teclado, monitor, mouse etc.   
+                </p>
+            </div>
+        
+            <img src="img/gettyimages-1013896352.webp" alt="imagem-porquinho" class="foto-lateral">
+        </div>
+        <hr>
+        <h1>Pc ou notebook?</h1>
+        <div class="video">
+            <h2>Para determinar qual dos dois se adequam melhor, é necessario entender os pontos positivos
+                e negativos de cada um dos dois, e sobre o quesito preço, mas de forma resumida:
+                <br>
+                Quer desempenho? 
+                Escolha o pc, computadores tendem a custar menos com um desempenho maior
+                <br>
+                Quer mobilidade? O notebook vai ser mais adequado para voce, apesar de possuir um desempenho inferior, sua praticidade é um fator positivo.
+            </h2>
+        
+                <video controls width="800" height="800">
+                    <source src="img/videoplayback.mp4" type="video/mp4">
+                    <track kind="subtitles" srclang="pt-br" src="img/videoplayback.vtt" label="legendas pt-br">
+                </video>
+        </div>
+        <section class="secao-lista">
+            <h1>O que não pode faltar:</h1>
+            <ul class="lista-componentes">
+                <li>Processador (CPU)</li>
+                <li>Placa-mãe (Motherboard)</li>
+                <li>Memória RAM</li>
+                <li>Armazenamento (SSD ou HD)</li>
+                <li>Fonte de Alimentação (PSU)</li>
+            </ul>
+        </section>
+
+        <section class="galeria" id="galeria">
+            <h1>Galeria de Hardware</h1>
+            <div class="container-galeria">
+                <img src="img/images.jpg" alt="Processador" class="foto-galeria">
+                <img src="img/3060m--1--wsg5ey0vl6.webp" alt="Placa de Vídeo" class="foto-galeria">
+                <img src="img/images (1).jpg" alt="Memória RAM" class="foto-galeria">
+            </div>
+        </section>
+
+        <section class="secao-tabela">
+            <h1>Sugestão de Orçamento</h1>
+            <table class="tabela-preços">
+                <thead>
+                    <tr>
+                        <th>Peça</th>
+                        <th>Modelo</th>
+                        <th>Preço Est.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Processador</td>
+                        <td>Ryzen 5 5600</td>
+                        <td>R$ 850,00</td>
+                    </tr>
+                    <tr>
+                        <td>Placa de Vídeo</td>
+                        <td>RTX 3060</td>
+                        <td>R$ 1.700,00</td>
+                    </tr>
+                    <tr>
+                        <td>Memória</td>
+                        <td>16GB DDR4</td>
+                        <td>R$ 300,00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="contato" class="secao-contato">
+            <h1>Ficou com alguma dúvida?</h1>
+            <form class="formulario">
+                <div class="campo-form">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+                </div>
+                <div class="campo-form">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="campo-form">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="4" placeholder="Escreva sua dúvida aqui..." required></textarea>
+                </div>
+                <button type="submit" class="botao-menu">Enviar</button>
+            </form>
+        </section>
+    </main> <footer class="rodape">
+        <p>&copy; 2026 - Projeto Final Construção Web | UFES </p>
+        <p>Desenvolvido por: [Seu Nome Aqui]</p>
+    </footer>
+    </main>
+</body>
+</html>

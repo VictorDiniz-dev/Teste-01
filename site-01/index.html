@@ -1,34 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu primeiro site em repositorio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-    rel="stylesheet" 
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-    crossorigin="anonymous">
+    <title>Meu site em repositório</title>
+    <!-- Bootstrap 5.3 Corrigido -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
 
-<!-- As a heading -->
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Navbar</span>
+<!-- Troque toda a sua <nav> por esta -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3" style="background-color: #112D4E !important; display: block !important;">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between w-100">
+        <a class="navbar-brand fw-bold fs-3" href="#" style="color: white !important;">MeuProjeto</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#meuMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="meuMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active text-white" href="#">Início</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#">Peças</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#">Dicas</a></li>
+      </ul>
+      
+      <form class="d-flex mt-3 mt-lg-0" role="search">
+        <input class="form-control me-2" type="search" placeholder="Pesquisar...">
+        <button class="btn btn-outline-light" type="submit">Buscar</button>
+      </form>
+    </div>
   </div>
 </nav>
-
-
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
             crossorigin="anonymous">
     </script>
+    <script src="https://jsdelivr.net"></script>
+
 </body>
 </html>

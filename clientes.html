@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes | FluxoCRM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="clientes">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div>
+          <strong>FluxoCRM</strong>
+          <small>Protótipo MVP</small>
+        </div>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="index.html">Dashboard</a>
+        <a class="active" href="clientes.html">Clientes</a>
+        <a href="atendimentos.html">Atendimentos</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a href="mensagens.html">Mensagens prontas</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Cadastro</p>
+          <h1>Clientes</h1>
+          <p>Consulte contatos cadastrados e visualize um formulário simples de novo cliente.</p>
+        </div>
+        <button class="primary-button" type="button">Novo cliente</button>
+      </header>
+
+      <section class="content-grid two-columns reverse-mobile">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Clientes cadastrados</h2>
+            <span class="panel-count" id="clientsCount">0 clientes</span>
+          </div>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Telefone</th>
+                  <th>Origem</th>
+                  <th>Observações</th>
+                </tr>
+              </thead>
+              <tbody id="clientsTable"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel form-panel">
+          <div class="panel-header">
+            <h2>Novo cliente</h2>
+          </div>
+
+          <!-- Formulário visual. Ele ainda não salva dados. -->
+          <form class="simple-form">
+            <label>
+              Nome
+              <input type="text" placeholder="Ex.: Ana Souza">
+            </label>
+
+            <label>
+              Telefone
+              <input type="tel" placeholder="Ex.: (11) 99999-0000">
+            </label>
+
+            <label>
+              Origem do contato
+              <select>
+                <option>WhatsApp</option>
+                <option>Instagram</option>
+                <option>Ligação</option>
+                <option>Formulário</option>
+                <option>Indicação</option>
+              </select>
+            </label>
+
+            <label>
+              Observações
+              <textarea rows="5" placeholder="Preferências, contexto do contato ou histórico inicial"></textarea>
+            </label>
+
+            <button class="secondary-button" type="button">Salvar rascunho visual</button>
+          </form>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

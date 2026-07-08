@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mensagens prontas | FluxoCRM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="mensagens">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div>
+          <strong>FluxoCRM</strong>
+          <small>Protótipo MVP</small>
+        </div>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="index.html">Dashboard</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="atendimentos.html">Atendimentos</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a class="active" href="mensagens.html">Mensagens prontas</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Comunicação</p>
+          <h1>Mensagens prontas</h1>
+          <p>Modelos simples para padronizar respostas recorrentes no atendimento.</p>
+        </div>
+        <button class="primary-button" type="button">Nova mensagem</button>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Modelos de mensagens</h2>
+          <span class="panel-count" id="messagesCount">0 modelos</span>
+        </div>
+        <div class="message-grid" id="messagesList"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

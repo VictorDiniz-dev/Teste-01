@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | FluxoCRM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="dashboard">
+  <div class="app-layout">
+    <!-- Menu lateral usado no desktop e adaptado para o topo no mobile. -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div>
+          <strong>FluxoCRM</strong>
+          <small>Protótipo MVP</small>
+        </div>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="active" href="index.html">Dashboard</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="atendimentos.html">Atendimentos</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a href="mensagens.html">Mensagens prontas</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Visão geral</p>
+          <h1>Dashboard</h1>
+          <p>Acompanhe clientes, atendimentos pendentes e compromissos do dia.</p>
+        </div>
+        <button class="primary-button" type="button">Novo atendimento</button>
+      </header>
+
+      <!-- Os cards são preenchidos pelo arquivo js/app.js com dados fictícios. -->
+      <section class="summary-grid" id="summaryCards" aria-label="Resumo do dia"></section>
+
+      <section class="content-grid two-columns">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Próximos atendimentos</h2>
+            <span class="panel-count" id="nextTicketsCount">0 itens</span>
+          </div>
+          <div class="simple-list" id="nextTicketsList"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Agendamentos do dia</h2>
+            <span class="panel-count" id="todayAppointmentsCount">0 itens</span>
+          </div>
+          <div class="simple-list" id="todayAppointmentsList"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

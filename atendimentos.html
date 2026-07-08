@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atendimentos | FluxoCRM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="atendimentos">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div>
+          <strong>FluxoCRM</strong>
+          <small>Protótipo MVP</small>
+        </div>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="index.html">Dashboard</a>
+        <a href="clientes.html">Clientes</a>
+        <a class="active" href="atendimentos.html">Atendimentos</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a href="mensagens.html">Mensagens prontas</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Fluxo de atendimento</p>
+          <h1>Atendimentos</h1>
+          <p>Veja a etapa atual, o cliente associado e a próxima ação de cada atendimento.</p>
+        </div>
+        <button class="primary-button" type="button">Novo atendimento</button>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Lista de atendimentos</h2>
+          <span class="panel-count" id="ticketsCount">0 atendimentos</span>
+        </div>
+        <div class="card-list" id="ticketsList"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -290,10 +290,38 @@ function iniciarPaginaAtual() {
   const pagina = document.body.dataset.page;
 
   if (pagina === "dashboard") preencherDashboard();
-  if (pagina === "clientes") preencherClientes();
+  if (pagina === "clientes") preencherClientes();configurarFormularioCliente();
   if (pagina === "atendimentos") preencherAtendimentos();
   if (pagina === "agendamentos") preencherAgendamentos();
   if (pagina === "mensagens") preencherMensagens();
+}
+
+function configurarFormularioCliente(){
+  const formCliente = document.getElementById("form-cliente");
+
+  if (!formCliente) return;
+
+  formCliente.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+  const nome = document.getElementById("nome-cliente").value;
+  const telefone = document.getElementById("telefone-cliente").value;
+  const origem = document.getElementById("origem-cliente").value;
+  const observacoes = document.getElementById("observacoes-cliente").value;
+    
+  const novoCliente = {
+  nome: nome,
+  telefone: telefone,
+  origem: origem,
+  observacoes: observacoes
+  };
+
+  
+  clientes.push(novoCliente);
+  preencherClientes();
+  console.log(novoCliente);
+  })
+  ;
 }
 
 iniciarMenuMobile();

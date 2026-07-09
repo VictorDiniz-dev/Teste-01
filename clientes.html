@@ -65,20 +65,20 @@
           </div>
 
           <!-- Formulário visual. Ele ainda não salva dados. -->
-          <form class="simple-form">
+          <form class="simple-form" id="form-cliente">
             <label>
               Nome
-              <input type="text" placeholder="Ex.: Ana Souza">
+              <input type="text" placeholder="Ex.: Ana Souza" id="nome-cliente">
             </label>
 
             <label>
               Telefone
-              <input type="tel" placeholder="Ex.: (11) 99999-0000">
+              <input type="tel" placeholder="Ex.: (11) 99999-0000" id="telefone-cliente">
             </label>
 
             <label>
               Origem do contato
-              <select>
+              <select id="origem-cliente">
                 <option>WhatsApp</option>
                 <option>Instagram</option>
                 <option>Ligação</option>
@@ -89,10 +89,10 @@
 
             <label>
               Observações
-              <textarea rows="5" placeholder="Preferências, contexto do contato ou histórico inicial"></textarea>
+              <textarea rows="5" placeholder="Preferências, contexto do contato ou histórico inicial" id="observacoes-cliente"></textarea>
             </label>
 
-            <button class="secondary-button" type="button">Salvar rascunho visual</button>
+            <button class="secondary-button" type="submit">Salvar rascunho visual</button>
           </form>
         </article>
       </section>

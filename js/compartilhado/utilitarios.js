@@ -20,12 +20,16 @@
     return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`;
   }
 
-  function gerarIdCliente() {
+  function gerarId(prefixo = "registro") {
     if (window.crypto && typeof window.crypto.randomUUID === "function") {
       return window.crypto.randomUUID();
     }
 
-    return `cliente-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    return `${prefixo}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  }
+
+  function gerarIdCliente() {
+    return gerarId("cliente");
   }
 
   function escapeHtml(valor) {
@@ -40,6 +44,7 @@
   Object.assign(FluxoCRM.compartilhado, {
     escapeHtml,
     formatarTelefone,
+    gerarId,
     gerarIdCliente,
     normalizarTelefone,
     normalizarTexto

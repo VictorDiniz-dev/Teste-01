@@ -1,39 +1,12 @@
 (function (FluxoCRM) {
-  const CHAVE_ARMAZENAMENTO = "fluxocrm_clientes";
-  const armazenamento = FluxoCRM.core.criarArmazenamentoJson(CHAVE_ARMAZENAMENTO);
+  const repository = FluxoCRM.repositories.clientes;
+  const modelo = FluxoCRM.modelos.cliente;
   const {
     formatarTelefone,
-    gerarIdCliente,
     normalizarTelefone,
     normalizarTexto
   } = FluxoCRM.compartilhado;
-
-  function lerClientes() {
-    const dados = armazenamento.ler();
-    if (!Array.isArray(dados)) return [];
-
-    return dados
-      .filter((cliente) => cliente && typeof cliente === "object")
-      .map((cliente) => ({
-        id: cliente.id || gerarIdCliente(),
-        nome: normalizarTexto(cliente.nome),
-        telefone: formatarTelefone(cliente.telefone),
-        origem: normalizarTexto(cliente.origem || "WhatsApp"),
-        observacoes: normalizarTexto(cliente.observacoes || "")
-      }))
-      .filter((cliente) => cliente.nome && cliente.telefone);
-  }
-
-  function carregarClientes() {
-    const dadosSalvos = lerClientes();
-    if (dadosSalvos.length > 0) return dadosSalvos;
-
-    const iniciais = FluxoCRM.dados.clientesIniciais.map((cliente) => ({ ...cliente }));
-    armazenamento.salvar(iniciais);
-    return iniciais;
-  }
-
-  const clientes = carregarClientes();
+  const clientes = repository.listar();
 
   function criarLinhaCliente(cliente) {
     const tr = document.createElement("tr");
@@ -132,14 +105,13 @@
         return;
       }
 
-      clientes.push({
-        id: gerarIdCliente(),
+      clientes.push(modelo.criar({
         nome: normalizarTexto(nome),
         telefone: formatarTelefone(telefoneNormalizado),
         origem: normalizarTexto(origem),
         observacoes: normalizarTexto(observacoes)
-      });
-      armazenamento.salvar(clientes);
+      }));
+      repository.salvarTodos(clientes);
       renderizar();
       formulario.reset();
       campoTelefone.focus();

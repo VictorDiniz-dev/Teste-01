@@ -319,6 +319,43 @@ button {
   background: #d9ece3;
 }
 
+.form-actions,
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.form-actions .secondary-button {
+  flex: 1 1 190px;
+}
+
+.text-button,
+.action-button {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--primary-dark);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.text-button {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+}
+
+.action-button {
+  min-height: 34px;
+  padding: 4px var(--space-3);
+  font-size: 13px;
+}
+
+.text-button:hover,
+.action-button:hover {
+  background: var(--surface-muted);
+}
+
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
 .menu-toggle:focus-visible,
@@ -543,6 +580,18 @@ tbody tr:hover td {
   color: #5b4b91;
 }
 
+.status-ativo {
+  background: #edf7f1;
+  border-color: #cce5d5;
+  color: var(--success);
+}
+
+.status-inativo {
+  background: #f1f3f2;
+  border-color: var(--border-strong);
+  color: var(--neutral);
+}
+
 /* 8. Responsividade */
 @media (max-width: 1100px) {
   .main-content {
@@ -755,6 +804,22 @@ tbody tr:hover td {
 
   body[data-page="agendamentos"] td:nth-child(5)::before {
     content: "Status";
+  }
+
+  body[data-page="servicos"] td:nth-child(1)::before {
+    content: "Nome";
+  }
+
+  body[data-page="servicos"] td:nth-child(2)::before {
+    content: "Duração";
+  }
+
+  body[data-page="servicos"] td:nth-child(3)::before {
+    content: "Status";
+  }
+
+  body[data-page="servicos"] td:nth-child(4)::before {
+    content: "Ações";
   }
 }
 

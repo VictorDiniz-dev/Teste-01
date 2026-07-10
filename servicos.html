@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serviços | FluxoCRM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="servicos">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div>
+          <strong>FluxoCRM</strong>
+          <small>Protótipo MVP</small>
+        </div>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="index.html">Dashboard</a>
+        <a href="clientes.html">Clientes</a>
+        <a class="active" href="servicos.html">Serviços</a>
+        <a href="atendimentos.html">Atendimentos</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a href="mensagens.html">Mensagens prontas</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Cadastro</p>
+          <h1>Serviços</h1>
+          <p>Cadastre e organize os serviços oferecidos.</p>
+        </div>
+        <button class="primary-button" id="novo-servico" type="button">Novo serviço</button>
+      </header>
+
+      <section class="content-grid two-columns reverse-mobile">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Serviços cadastrados</h2>
+            <span class="panel-count" id="servicos-contador">0 serviços</span>
+          </div>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Duração</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="servicos-lista"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel form-panel">
+          <div class="panel-header">
+            <h2 id="servico-form-titulo">Novo serviço</h2>
+          </div>
+
+          <form class="simple-form" id="form-servico" novalidate>
+            <label>
+              Nome do serviço
+              <input id="nome-servico" type="text" placeholder="Ex.: Corte masculino" required minlength="3">
+            </label>
+
+            <label>
+              Duração (minutos)
+              <input id="duracao-servico" type="number" placeholder="Ex.: 40" required min="5" max="1440" step="1" inputmode="numeric">
+            </label>
+
+            <div class="form-actions">
+              <button class="secondary-button" id="salvar-servico" type="submit">Cadastrar serviço</button>
+              <button class="text-button" id="cancelar-edicao" type="button" hidden>Cancelar edição</button>
+            </div>
+            <p class="form-feedback" id="servicos-feedback" aria-live="polite"></p>
+          </form>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/core/namespace.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/compartilhado/utilitarios.js"></script>
+  <script src="js/modelos/servico.js"></script>
+  <script src="js/repositories/criarColecaoRepository.js"></script>
+  <script src="js/repositories/servicosRepository.js"></script>
+  <script src="js/modulos/menu.js"></script>
+  <script src="js/modulos/servicos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

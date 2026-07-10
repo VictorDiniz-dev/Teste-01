@@ -447,6 +447,10 @@ table {
   border-collapse: collapse;
 }
 
+.wide-table {
+  min-width: 920px;
+}
+
 th,
 td {
   padding: 14px var(--space-4);
@@ -525,6 +529,26 @@ tbody tr:hover td {
 
 .form-feedback[data-status="erro"] {
   color: var(--danger);
+}
+
+.form-notice {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-notice:empty {
+  display: none;
+}
+
+.form-notice[data-status="erro"] {
+  color: var(--danger);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
 }
 
 /* 7. Status visuais */
@@ -819,6 +843,30 @@ tbody tr:hover td {
   }
 
   body[data-page="servicos"] td:nth-child(4)::before {
+    content: "Ações";
+  }
+
+  body[data-page="solicitacoes"] td:nth-child(1)::before {
+    content: "Cliente";
+  }
+
+  body[data-page="solicitacoes"] td:nth-child(2)::before {
+    content: "Serviço";
+  }
+
+  body[data-page="solicitacoes"] td:nth-child(3)::before {
+    content: "Data preferencial";
+  }
+
+  body[data-page="solicitacoes"] td:nth-child(4)::before {
+    content: "Status";
+  }
+
+  body[data-page="solicitacoes"] td:nth-child(5)::before {
+    content: "Data de criação";
+  }
+
+  body[data-page="solicitacoes"] td:nth-child(6)::before {
     content: "Ações";
   }
 }

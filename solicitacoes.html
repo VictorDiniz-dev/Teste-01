@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clientes | FluxoCRM</title>
+  <title>Solicitações | FluxoCRM</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-page="clientes">
+<body data-page="solicitacoes">
   <div class="app-layout">
     <aside class="sidebar">
       <div class="brand">
@@ -21,9 +21,9 @@
 
       <nav class="main-nav" aria-label="Navegação principal">
         <a href="index.html">Dashboard</a>
-        <a class="active" href="clientes.html">Clientes</a>
+        <a href="clientes.html">Clientes</a>
         <a href="servicos.html">Serviços</a>
-        <a href="solicitacoes.html">Solicitações</a>
+        <a class="active" href="solicitacoes.html">Solicitações</a>
         <a href="atendimentos.html">Atendimentos</a>
         <a href="agendamentos.html">Agendamentos</a>
         <a href="mensagens.html">Mensagens prontas</a>
@@ -33,69 +33,69 @@
     <main class="main-content">
       <header class="page-header">
         <div>
-          <p class="eyebrow">Cadastro</p>
-          <h1>Clientes</h1>
-          <p>Consulte contatos cadastrados e visualize um formulário simples de novo cliente.</p>
+          <p class="eyebrow">Atendimento</p>
+          <h1>Solicitações</h1>
+          <p>Registre e acompanhe os pedidos de atendimento dos clientes.</p>
         </div>
-        <button class="primary-button" type="button">Novo cliente</button>
+        <button class="primary-button" id="nova-solicitacao" type="button">Nova solicitação</button>
       </header>
 
       <section class="content-grid two-columns reverse-mobile">
         <article class="panel">
           <div class="panel-header">
-            <h2>Clientes cadastrados</h2>
-            <span class="panel-count" id="clientsCount">0 clientes</span>
+            <h2>Solicitações cadastradas</h2>
+            <span class="panel-count" id="solicitacoes-contador">0 solicitações</span>
           </div>
           <div class="responsive-table">
-            <table>
+            <table class="wide-table">
               <thead>
                 <tr>
-                  <th>Nome</th>
-                  <th>Telefone</th>
-                  <th>Origem</th>
-                  <th>Observações</th>
+                  <th>Cliente</th>
+                  <th>Serviço</th>
+                  <th>Data preferencial</th>
+                  <th>Status</th>
+                  <th>Data de criação</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
-              <tbody id="clientsTable"></tbody>
+              <tbody id="solicitacoes-lista"></tbody>
             </table>
           </div>
         </article>
 
         <article class="panel form-panel">
           <div class="panel-header">
-            <h2>Novo cliente</h2>
+            <h2 id="solicitacao-form-titulo">Nova solicitação</h2>
           </div>
 
-          <!-- Formulário visual. Ele ainda não salva dados. -->
-          <form class="simple-form" id="form-cliente">
+          <form class="simple-form" id="form-solicitacao" novalidate>
+            <p class="form-notice" id="solicitacoes-pre-requisitos" aria-live="polite"></p>
+
             <label>
-              Nome
-              <input type="text" placeholder="Ex.: Ana Souza" id="nome-cliente">
+              Cliente
+              <select id="cliente-solicitacao" required></select>
             </label>
 
             <label>
-              Telefone
-              <input type="tel" placeholder="Ex.: (11) 99999-0000" id="telefone-cliente" maxlength="15" inputmode="numeric">
+              Serviço
+              <select id="servico-solicitacao" required></select>
             </label>
 
             <label>
-              Origem do contato
-              <select id="origem-cliente">
-                <option>WhatsApp</option>
-                <option>Instagram</option>
-                <option>Ligação</option>
-                <option>Formulário</option>
-                <option>Indicação</option>
-              </select>
+              Data preferencial
+              <input id="data-preferencial" type="date" required>
             </label>
 
             <label>
               Observações
-              <textarea rows="5" placeholder="Preferências, contexto do contato ou histórico inicial" id="observacoes-cliente"></textarea>
+              <textarea id="observacoes-solicitacao" rows="5" maxlength="500" placeholder="Preferências ou contexto do pedido"></textarea>
             </label>
 
-            <button class="secondary-button" type="submit">Salvar rascunho visual</button>
-            <p class="form-feedback" id="clientes-feedback" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="secondary-button" id="salvar-solicitacao" type="submit">Cadastrar solicitação</button>
+              <button class="text-button" id="cancelar-edicao-solicitacao" type="button" hidden>Cancelar edição</button>
+            </div>
+            <p class="form-feedback" id="solicitacoes-feedback" aria-live="polite"></p>
           </form>
         </article>
       </section>
@@ -105,23 +105,16 @@
   <script src="js/core/namespace.js"></script>
   <script src="js/core/storage.js"></script>
   <script src="js/compartilhado/utilitarios.js"></script>
-  <script src="js/compartilhado/status.js"></script>
   <script src="js/modelos/cliente.js"></script>
   <script src="js/modelos/servico.js"></script>
   <script src="js/modelos/solicitacao.js"></script>
-  <script src="js/modelos/agendamento.js"></script>
   <script src="js/dados/dados-simulados.js"></script>
   <script src="js/repositories/criarColecaoRepository.js"></script>
   <script src="js/repositories/clientesRepository.js"></script>
   <script src="js/repositories/servicosRepository.js"></script>
   <script src="js/repositories/solicitacoesRepository.js"></script>
-  <script src="js/repositories/agendamentosRepository.js"></script>
   <script src="js/modulos/menu.js"></script>
-  <script src="js/modulos/clientes.js"></script>
-  <script src="js/modulos/dashboard.js"></script>
-  <script src="js/modulos/atendimentos.js"></script>
-  <script src="js/modulos/agendamentos.js"></script>
-  <script src="js/modulos/mensagens.js"></script>
+  <script src="js/modulos/solicitacoes.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

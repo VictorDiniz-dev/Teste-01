@@ -1,4 +1,6 @@
-# Ideias Futuras do FluxoCRM
+# Ideias Futuras do FluxoCRM — Documento legado
+
+> **Status: legado.** Esta lista registra possibilidades levantadas antes da consolidação atual. O planejamento vigente está em `ROADMAP.md`; nenhuma ideia abaixo deve ser tratada como compromisso de produto sem nova validação.
 
 ## Objetivo
 Este documento registra possibilidades de evolução do projeto após a validação do MVP.

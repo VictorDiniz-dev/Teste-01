@@ -1,36 +1,43 @@
 /* =========================================================
-   FluxoCRM - JavaScript do protótipo
-   Este arquivo usa apenas dados fictícios para montar as telas.
-   Não existe salvamento, banco de dados ou backend nesta fase.
+   FluxoCRM - JavaScript do prototipo
+   Este arquivo usa dados locais para montar as telas.
+   Neste momento nao existe backend nem banco de dados.
    ========================================================= */
 
-// Dados fictícios: altere estes arrays para mudar o conteúdo das telas.
-const clientes = [
+const ARMAZENAMENTO_CLIENTES = "fluxocrm_clientes";
+
+const clientesIniciais = [
   {
+    id: gerarIdCliente(),
     nome: "Ana Souza",
     telefone: "(11) 99999-0101",
     origem: "WhatsApp",
-    observacoes: "Quer agendar corte e hidratação."
+    observacoes: "Quer agendar corte e hidratacao."
   },
   {
+    id: gerarIdCliente(),
     nome: "Carlos Lima",
     telefone: "(21) 98888-0202",
     origem: "Instagram",
-    observacoes: "Pediu orçamento de manutenção."
+    observacoes: "Pediu orcamento de manutencao."
   },
   {
+    id: gerarIdCliente(),
     nome: "Marina Costa",
     telefone: "(31) 97777-0303",
-    origem: "Indicação",
-    observacoes: "Retornar no período da tarde."
+    origem: "Indicacao",
+    observacoes: "Retornar no periodo da tarde."
   },
   {
+    id: gerarIdCliente(),
     nome: "Roberto Alves",
     telefone: "(41) 96666-0404",
-    origem: "Ligação",
-    observacoes: "Aguardando confirmação de horário."
+    origem: "Ligacao",
+    observacoes: "Aguardando confirmacao de horario."
   }
 ];
+
+let clientes = carregarClientes();
 
 const atendimentos = [
   {
@@ -43,15 +50,15 @@ const atendimentos = [
   {
     cliente: "Carlos Lima",
     etapa: "Em atendimento",
-    proximaAcao: "Confirmar detalhes do serviço",
+    proximaAcao: "Confirmar detalhes do servico",
     dataRetorno: "Hoje, 16:30",
     responsavel: "Atendimento"
   },
   {
     cliente: "Marina Costa",
     etapa: "Aguardando cliente",
-    proximaAcao: "Aguardar resposta sobre orçamento",
-    dataRetorno: "Amanhã, 10:00",
+    proximaAcao: "Aguardar resposta sobre orcamento",
+    dataRetorno: "Amanha, 10:00",
     responsavel: "Atendimento"
   },
   {
@@ -63,8 +70,8 @@ const atendimentos = [
   },
   {
     cliente: "Juliana Rocha",
-    etapa: "Concluído",
-    proximaAcao: "Nenhuma ação pendente",
+    etapa: "Concluido",
+    proximaAcao: "Nenhuma acao pendente",
     dataRetorno: "-",
     responsavel: "Atendimento"
   }
@@ -73,14 +80,14 @@ const atendimentos = [
 const agendamentos = [
   {
     cliente: "Ana Souza",
-    servico: "Corte e hidratação",
+    servico: "Corte e hidratacao",
     data: "08/07/2026",
     horario: "15:00",
     status: "Agendado"
   },
   {
     cliente: "Roberto Alves",
-    servico: "Avaliação técnica",
+    servico: "Avaliacao tecnica",
     data: "08/07/2026",
     horario: "17:30",
     status: "Aguardando cliente"
@@ -94,7 +101,7 @@ const agendamentos = [
   },
   {
     cliente: "Pedro Martins",
-    servico: "Remarcação",
+    servico: "Remarcacao",
     data: "10/07/2026",
     horario: "11:00",
     status: "Cancelado"
@@ -105,12 +112,12 @@ const mensagens = [
   {
     categoria: "Primeira resposta",
     titulo: "Boas-vindas",
-    texto: "Olá! Recebemos seu contato e já vamos te ajudar."
+    texto: "Ola! Recebemos seu contato e ja vamos te ajudar."
   },
   {
-    categoria: "Confirmação",
+    categoria: "Confirmacao",
     titulo: "Confirmar agendamento",
-    texto: "Seu horário está confirmado. Qualquer mudança, avise por aqui."
+    texto: "Seu horario esta confirmado. Qualquer mudanca, avise por aqui."
   },
   {
     categoria: "Lembrete",
@@ -118,23 +125,23 @@ const mensagens = [
     texto: "Passando para lembrar do seu atendimento agendado para hoje."
   },
   {
-    categoria: "Remarcação",
-    titulo: "Propor novo horário",
-    texto: "Podemos remarcar para outro horário disponível. Qual fica melhor?"
+    categoria: "Remarcacao",
+    titulo: "Propor novo horario",
+    texto: "Podemos remarcar para outro horario disponivel. Qual fica melhor?"
   },
   {
     categoria: "Cancelamento",
     titulo: "Cancelamento registrado",
-    texto: "Tudo bem, seu cancelamento foi registrado. Ficamos à disposição."
+    texto: "Tudo bem, seu cancelamento foi registrado. Ficamos a disposicao."
   },
   {
     categoria: "Retorno",
     titulo: "Retomar atendimento",
-    texto: "Olá! Estou retomando nosso contato conforme combinado."
+    texto: "Ola! Estou retomando nosso contato conforme combinado."
   }
 ];
 
-// Ativa o menu mobile. No desktop o menu fica sempre visível pelo CSS.
+// Ativa o menu mobile. No desktop o menu fica sempre visivel pelo CSS.
 function iniciarMenuMobile() {
   const botao = document.querySelector(".menu-toggle");
   const menu = document.querySelector(".main-nav");
@@ -155,7 +162,7 @@ function criarStatusClasse(status) {
   if (texto.includes("em atendimento")) return "status-em-atendimento";
   if (texto.includes("aguardando")) return "status-aguardando";
   if (texto.includes("agendado")) return "status-agendado";
-  if (texto.includes("concluído")) return "status-concluido";
+  if (texto.includes("concluido")) return "status-concluido";
   if (texto.includes("perdido")) return "status-perdido";
   if (texto.includes("cancelado")) return "status-cancelado";
   if (texto.includes("retorno")) return "status-retorno";
@@ -164,7 +171,7 @@ function criarStatusClasse(status) {
 }
 
 function criarStatus(status) {
-  return `<span class="status ${criarStatusClasse(status)}">${status}</span>`;
+  return `<span class="status ${criarStatusClasse(status)}">${escapeHtml(status)}</span>`;
 }
 
 function preencherDashboard() {
@@ -172,7 +179,7 @@ function preencherDashboard() {
     { rotulo: "Total de clientes", valor: clientes.length },
     {
       rotulo: "Atendimentos pendentes",
-      valor: atendimentos.filter((item) => item.etapa !== "Concluído" && item.etapa !== "Perdido").length
+      valor: atendimentos.filter((item) => item.etapa !== "Concluido" && item.etapa !== "Perdido").length
     },
     {
       rotulo: "Agendamentos do dia",
@@ -188,36 +195,50 @@ function preencherDashboard() {
   const nextTicketsList = document.querySelector("#nextTicketsList");
   const todayAppointmentsList = document.querySelector("#todayAppointmentsList");
 
-  summaryCards.innerHTML = cards.map((card) => `
-    <article class="summary-card">
-      <span>${card.rotulo}</span>
-      <strong>${card.valor}</strong>
-    </article>
-  `).join("");
+  if (!summaryCards || !nextTicketsList || !todayAppointmentsList) {
+    return;
+  }
 
-  const proximosAtendimentos = atendimentos.filter((item) => item.etapa !== "Concluído");
-  document.querySelector("#nextTicketsCount").textContent = `${proximosAtendimentos.length} itens`;
+  summaryCards.innerHTML = cards
+    .map(
+      (card) => `
+        <article class="summary-card">
+          <span>${card.rotulo}</span>
+          <strong>${card.valor}</strong>
+        </article>
+      `
+    )
+    .join("");
+
+  const proximosAtendimentos = atendimentos.filter((item) => item.etapa !== "Concluido");
+  const nextTicketsCount = document.querySelector("#nextTicketsCount");
+  if (nextTicketsCount) {
+    nextTicketsCount.textContent = `${proximosAtendimentos.length} itens`;
+  }
 
   nextTicketsList.innerHTML = proximosAtendimentos.slice(0, 4).map((item) => `
     <div class="list-item">
-      <strong>${item.cliente}</strong>
+      <strong>${escapeHtml(item.cliente)}</strong>
       ${criarStatus(item.etapa)}
       <div class="item-meta">
-        <span>${item.proximaAcao}</span>
-        <span>Retorno: ${item.dataRetorno}</span>
+        <span>${escapeHtml(item.proximaAcao)}</span>
+        <span>Retorno: ${escapeHtml(item.dataRetorno)}</span>
       </div>
     </div>
   `).join("");
 
   const agendamentosDoDia = agendamentos.filter((item) => item.data === "08/07/2026");
-  document.querySelector("#todayAppointmentsCount").textContent = `${agendamentosDoDia.length} itens`;
+  const todayAppointmentsCount = document.querySelector("#todayAppointmentsCount");
+  if (todayAppointmentsCount) {
+    todayAppointmentsCount.textContent = `${agendamentosDoDia.length} itens`;
+  }
 
   todayAppointmentsList.innerHTML = agendamentosDoDia.map((item) => `
     <div class="list-item">
-      <strong>${item.cliente}</strong>
-      <div>${item.servico}</div>
+      <strong>${escapeHtml(item.cliente)}</strong>
+      <div>${escapeHtml(item.servico)}</div>
       <div class="item-meta">
-        <span>${item.horario}</span>
+        <span>${escapeHtml(item.horario)}</span>
         ${criarStatus(item.status)}
       </div>
     </div>
@@ -226,30 +247,64 @@ function preencherDashboard() {
 
 function preencherClientes() {
   const tabela = document.querySelector("#clientsTable");
-  document.querySelector("#clientsCount").textContent = `${clientes.length} clientes`;
+  const contador = document.querySelector("#clientsCount");
 
-  tabela.innerHTML = clientes.map((cliente) => `
-    <tr>
-      <td><strong>${cliente.nome}</strong></td>
-      <td>${cliente.telefone}</td>
-      <td>${cliente.origem}</td>
-      <td>${cliente.observacoes}</td>
-    </tr>
-  `).join("");
+  if (!tabela || !contador) {
+    return;
+  }
+
+  contador.textContent = `${clientes.length} clientes`;
+  tabela.replaceChildren();
+
+  if (clientes.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.textContent = "Nenhum cliente cadastrado ainda.";
+    tr.appendChild(td);
+    tabela.appendChild(tr);
+    return;
+  }
+
+  clientes.forEach((cliente) => {
+    tabela.appendChild(criarLinhaCliente(cliente));
+  });
+}
+
+function criarLinhaCliente(cliente) {
+  const tr = document.createElement("tr");
+  const nome = document.createElement("td");
+  const telefone = document.createElement("td");
+  const origem = document.createElement("td");
+  const observacoes = document.createElement("td");
+
+  nome.textContent = cliente.nome;
+  telefone.textContent = cliente.telefone;
+  origem.textContent = cliente.origem;
+  observacoes.textContent = cliente.observacoes;
+
+  tr.append(nome, telefone, origem, observacoes);
+  return tr;
 }
 
 function preencherAtendimentos() {
   const lista = document.querySelector("#ticketsList");
-  document.querySelector("#ticketsCount").textContent = `${atendimentos.length} atendimentos`;
+  const contador = document.querySelector("#ticketsCount");
+
+  if (!lista || !contador) {
+    return;
+  }
+
+  contador.textContent = `${atendimentos.length} atendimentos`;
 
   lista.innerHTML = atendimentos.map((item) => `
     <article class="item-card">
       <div>
-        <strong>${item.cliente}</strong>
+        <strong>${escapeHtml(item.cliente)}</strong>
         <div class="item-meta">
-          <span>Próxima ação: ${item.proximaAcao}</span>
-          <span>Retorno: ${item.dataRetorno}</span>
-          <span>Responsável: ${item.responsavel}</span>
+          <span>Proxima acao: ${escapeHtml(item.proximaAcao)}</span>
+          <span>Retorno: ${escapeHtml(item.dataRetorno)}</span>
+          <span>Responsavel: ${escapeHtml(item.responsavel)}</span>
         </div>
       </div>
       ${criarStatus(item.etapa)}
@@ -259,14 +314,20 @@ function preencherAtendimentos() {
 
 function preencherAgendamentos() {
   const tabela = document.querySelector("#appointmentsTable");
-  document.querySelector("#appointmentsCount").textContent = `${agendamentos.length} agendamentos`;
+  const contador = document.querySelector("#appointmentsCount");
+
+  if (!tabela || !contador) {
+    return;
+  }
+
+  contador.textContent = `${agendamentos.length} agendamentos`;
 
   tabela.innerHTML = agendamentos.map((item) => `
     <tr>
-      <td><strong>${item.cliente}</strong></td>
-      <td>${item.servico}</td>
-      <td>${item.data}</td>
-      <td>${item.horario}</td>
+      <td><strong>${escapeHtml(item.cliente)}</strong></td>
+      <td>${escapeHtml(item.servico)}</td>
+      <td>${escapeHtml(item.data)}</td>
+      <td>${escapeHtml(item.horario)}</td>
       <td>${criarStatus(item.status)}</td>
     </tr>
   `).join("");
@@ -274,54 +335,224 @@ function preencherAgendamentos() {
 
 function preencherMensagens() {
   const lista = document.querySelector("#messagesList");
-  document.querySelector("#messagesCount").textContent = `${mensagens.length} modelos`;
+  const contador = document.querySelector("#messagesCount");
+
+  if (!lista || !contador) {
+    return;
+  }
+
+  contador.textContent = `${mensagens.length} modelos`;
 
   lista.innerHTML = mensagens.map((mensagem) => `
     <article class="message-card">
-      <span class="category-label">${mensagem.categoria}</span>
-      <strong>${mensagem.titulo}</strong>
-      <p>${mensagem.texto}</p>
+      <span class="category-label">${escapeHtml(mensagem.categoria)}</span>
+      <strong>${escapeHtml(mensagem.titulo)}</strong>
+      <p>${escapeHtml(mensagem.texto)}</p>
     </article>
   `).join("");
 }
 
-// Escolhe qual função executar usando o atributo data-page do body.
+// Escolhe qual funcao executar usando o atributo data-page do body.
 function iniciarPaginaAtual() {
   const pagina = document.body.dataset.page;
 
+  if (pagina === "clientes") {
+    configurarFormularioCliente();
+    preencherClientes();
+    return;
+  }
+
   if (pagina === "dashboard") preencherDashboard();
-  if (pagina === "clientes") preencherClientes();configurarFormularioCliente();
   if (pagina === "atendimentos") preencherAtendimentos();
   if (pagina === "agendamentos") preencherAgendamentos();
   if (pagina === "mensagens") preencherMensagens();
 }
 
-function configurarFormularioCliente(){
+function configurarFormularioCliente() {
   const formCliente = document.getElementById("form-cliente");
+  const campoTelefone = document.getElementById("telefone-cliente");
+  const feedback = document.getElementById("clientes-feedback");
 
-  if (!formCliente) return;
+  if (!formCliente || !campoTelefone || !feedback) {
+    return;
+  }
 
-  formCliente.addEventListener("submit", function (event) {
+  campoTelefone.addEventListener("input", () => {
+    campoTelefone.value = formatarTelefone(campoTelefone.value);
+  });
+
+  formCliente.addEventListener("submit", (event) => {
     event.preventDefault();
 
-  const nome = document.getElementById("nome-cliente").value;
-  const telefone = document.getElementById("telefone-cliente").value;
-  const origem = document.getElementById("origem-cliente").value;
-  const observacoes = document.getElementById("observacoes-cliente").value;
-    
-  const novoCliente = {
-  nome: nome,
-  telefone: telefone,
-  origem: origem,
-  observacoes: observacoes
-  };
+    const nome = document.getElementById("nome-cliente").value.trim();
+    const telefone = campoTelefone.value.trim();
+    const origem = document.getElementById("origem-cliente").value;
+    const observacoes = document.getElementById("observacoes-cliente").value.trim();
 
-  
-  clientes.push(novoCliente);
-  preencherClientes();
-  console.log(novoCliente);
-  })
-  ;
+    const validacao = validarCliente({ nome, telefone });
+
+    if (!validacao.valido) {
+      mostrarFeedbackCliente(feedback, validacao.mensagem, "erro");
+      return;
+    }
+
+    const telefoneNormalizado = normalizarTelefone(telefone);
+    const telefoneJaExiste = clientes.some(
+      (cliente) => normalizarTelefone(cliente.telefone) === telefoneNormalizado
+    );
+
+    if (telefoneJaExiste) {
+      mostrarFeedbackCliente(
+        feedback,
+        "Ja existe um cliente cadastrado com este telefone.",
+        "erro"
+      );
+      return;
+    }
+
+    const novoCliente = {
+      id: gerarIdCliente(),
+      nome: normalizarTexto(nome),
+      telefone: formatarTelefone(telefoneNormalizado),
+      origem: normalizarTexto(origem),
+      observacoes: normalizarTexto(observacoes)
+    };
+
+    clientes.push(novoCliente);
+    salvarClientes(clientes);
+    preencherClientes();
+    formCliente.reset();
+    campoTelefone.focus();
+    mostrarFeedbackCliente(feedback, "Cliente salvo com sucesso.", "sucesso");
+  });
+}
+
+function validarCliente({ nome, telefone }) {
+  const nomeNormalizado = normalizarTexto(nome);
+  const telefoneNormalizado = normalizarTelefone(telefone);
+
+  if (!nomeNormalizado || !telefoneNormalizado) {
+    return { valido: false, mensagem: "Preencha o nome e o telefone." };
+  }
+
+  if (nomeNormalizado.length < 3) {
+    return { valido: false, mensagem: "Digite um nome com pelo menos 3 caracteres." };
+  }
+
+  if (!/[A-Za-zÀ-ÿ]/.test(nomeNormalizado)) {
+    return { valido: false, mensagem: "Digite um nome valido." };
+  }
+
+  if (telefoneNormalizado.length < 10 || telefoneNormalizado.length > 11) {
+    return { valido: false, mensagem: "Digite um telefone valido com DDD." };
+  }
+
+  if (/^(\d)\1+$/.test(telefoneNormalizado)) {
+    return { valido: false, mensagem: "Digite um telefone valido com DDD." };
+  }
+
+  return { valido: true, mensagem: "" };
+}
+
+function mostrarFeedbackCliente(elemento, mensagem, tipo) {
+  elemento.textContent = mensagem;
+  elemento.dataset.status = tipo;
+}
+
+function normalizarTexto(valor) {
+  return String(valor || "").trim().replace(/\s+/g, " ");
+}
+
+function normalizarTelefone(valor) {
+  return String(valor || "").replace(/\D/g, "").slice(0, 11);
+}
+
+function formatarTelefone(valor) {
+  let numeros = normalizarTelefone(valor);
+
+  if (numeros.length === 0) {
+    return "";
+  }
+
+  if (numeros.length <= 2) {
+    return `(${numeros}`;
+  }
+
+  if (numeros.length <= 6) {
+    return `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
+  }
+
+  if (numeros.length <= 10) {
+    return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 6)}-${numeros.slice(6)}`;
+  }
+
+  return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`;
+}
+
+function gerarIdCliente() {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+
+  return `cliente-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function carregarClientes() {
+  const dadosSalvos = lerClientesDoStorage();
+
+  if (dadosSalvos.length > 0) {
+    return dadosSalvos;
+  }
+
+  const iniciais = clientesIniciais.map((cliente) => ({ ...cliente }));
+  salvarClientes(iniciais);
+  return iniciais;
+}
+
+function lerClientesDoStorage() {
+  try {
+    const bruto = localStorage.getItem(ARMAZENAMENTO_CLIENTES);
+
+    if (!bruto) {
+      return [];
+    }
+
+    const dados = JSON.parse(bruto);
+
+    if (!Array.isArray(dados)) {
+      return [];
+    }
+
+    return dados
+      .filter((cliente) => cliente && typeof cliente === "object")
+      .map((cliente) => ({
+        id: cliente.id || gerarIdCliente(),
+        nome: normalizarTexto(cliente.nome),
+        telefone: formatarTelefone(cliente.telefone),
+        origem: normalizarTexto(cliente.origem || "WhatsApp"),
+        observacoes: normalizarTexto(cliente.observacoes || "")
+      }))
+      .filter((cliente) => cliente.nome && cliente.telefone);
+  } catch {
+    return [];
+  }
+}
+
+function salvarClientes(lista) {
+  try {
+    localStorage.setItem(ARMAZENAMENTO_CLIENTES, JSON.stringify(lista));
+  } catch {
+    // Se o storage falhar, o prototipo continua funcionando em memoria.
+  }
+}
+
+function escapeHtml(valor) {
+  return String(valor)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 iniciarMenuMobile();

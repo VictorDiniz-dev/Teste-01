@@ -474,6 +474,22 @@ tbody tr:hover td {
   color: #94a19a;
 }
 
+.form-feedback {
+  min-height: 20px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-feedback[data-status="sucesso"] {
+  color: var(--success);
+}
+
+.form-feedback[data-status="erro"] {
+  color: var(--danger);
+}
+
 /* 7. Status visuais */
 .status {
   display: inline-flex;
@@ -753,6 +769,10 @@ tbody tr:hover td {
 
   .panel-header {
     display: grid;
+  }
+
+  .form-feedback {
+    min-height: auto;
   }
 
   td {

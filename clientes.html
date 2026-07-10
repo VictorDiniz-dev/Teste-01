@@ -73,7 +73,7 @@
 
             <label>
               Telefone
-              <input type="tel" placeholder="Ex.: (11) 99999-0000" id="telefone-cliente">
+              <input type="tel" placeholder="Ex.: (11) 99999-0000" id="telefone-cliente" maxlength="15" inputmode="numeric">
             </label>
 
             <label>
@@ -93,6 +93,7 @@
             </label>
 
             <button class="secondary-button" type="submit">Salvar rascunho visual</button>
+            <p class="form-feedback" id="clientes-feedback" aria-live="polite"></p>
           </form>
         </article>
       </section>

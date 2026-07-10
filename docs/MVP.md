@@ -1,4 +1,6 @@
-# MVP do FluxoCRM
+# MVP do FluxoCRM — Documento legado
+
+> **Status: legado.** Este documento registra a visão anterior do FluxoCRM como CRM genérico e não representa mais o direcionamento oficial do produto. Consulte `DOCUMENTO_MESTRE.md` e `ROADMAP.md`. O conteúdo abaixo foi preservado como histórico.
 
 ## Objetivo do MVP
 O MVP do FluxoCRM tem como finalidade validar a proposta de valor de organizar atendimentos e clientes em um fluxo simples, com foco em pequenos negócios.

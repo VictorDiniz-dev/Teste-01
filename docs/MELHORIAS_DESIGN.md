@@ -1,4 +1,6 @@
-# Melhorias de design do prototipo FluxoCRM
+# Melhorias de design do protótipo FluxoCRM — Documento legado
+
+> **Status: legado.** Este registro documenta uma etapa visual anterior e não orienta a visão atual do produto nem autoriza novo redesign. Consulte `DOCUMENTO_MESTRE.md` para o direcionamento vigente. O conteúdo abaixo foi preservado como histórico.
 
 Este documento registra as melhorias visuais e de responsividade feitas no prototipo.
 

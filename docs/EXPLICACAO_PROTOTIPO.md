@@ -1,177 +1,128 @@
-  # Explicacao do prototipo FluxoCRM
+# Explicação do protótipo FluxoCRM — Documento legado
 
-  Este documento explica a primeira versao navegavel do prototipo do FluxoCRM.
+> **Status: legado.** Este guia descreve a estrutura navegável herdada do protótipo e não define os módulos ou a visão atual do produto. Consulte `DOCUMENTO_MESTRE.md` e `ARQUITETURA.md`. O conteúdo abaixo foi preservado como referência histórica da implementação.
 
-  O objetivo desta fase e visualizar as telas principais do MVP usando apenas HTML, CSS e JavaScript puro. Nao existe backend, banco de dados, login real ou salvamento de informacoes.
+Este documento explica a versao navegavel do prototipo do FluxoCRM.
 
-  ## Arquivos criados
+O objetivo atual e visualizar as telas principais do MVP usando apenas HTML, CSS e JavaScript puro. Ainda nao ha backend, banco de dados ou login real.
 
-  - `index.html`: tela de Dashboard.
-  - `clientes.html`: tela de Clientes.
-  - `atendimentos.html`: tela de Atendimentos.
-  - `agendamentos.html`: tela de Agendamentos.
-  - `mensagens.html`: tela de Mensagens prontas.
-  - `css/style.css`: estilos visuais de todas as telas.
-  - `js/app.js`: dados ficticios e pequenos comportamentos do prototipo.
-  - `assets/`: pasta reservada para imagens, icones ou outros arquivos visuais no futuro.
-  - `docs/EXPLICACAO_PROTOTIPO.md`: este guia de explicacao.
+## Arquivos criados
 
-  ## Papel de cada arquivo
+- `index.html`: tela de Dashboard.
+- `clientes.html`: tela de Clientes.
+- `atendimentos.html`: tela de Atendimentos.
+- `agendamentos.html`: tela de Agendamentos.
+- `mensagens.html`: tela de Mensagens prontas.
+- `css/style.css`: estilos visuais de todas as telas.
+- `js/app.js`: dados ficticios, renderizacao e comportamento do prototipo.
+- `assets/`: pasta reservada para imagens, icones ou outros arquivos visuais no futuro.
+- `docs/EXPLICACAO_PROTOTIPO.md`: este guia de explicacao.
 
-  ### Paginas HTML
+## Papel de cada arquivo
 
-  As paginas HTML definem a estrutura do conteudo:
+### Paginas HTML
 
-  - menu lateral;
-  - cabecalho da tela;
-  - paineis;
-  - tabelas;
-  - formularios;
-  - areas onde o JavaScript insere dados ficticios.
+As paginas HTML definem a estrutura do conteudo:
 
-  Cada pagina usa o atributo `data-page` no elemento `body`.
+- menu lateral;
+- cabecalho da tela;
+- paineis;
+- tabelas;
+- formularios;
+- areas onde o JavaScript insere dados ficticios.
 
-  Exemplo:
+Cada pagina usa o atributo `data-page` no elemento `body`.
 
-  ```html
-  <body data-page="clientes">
-  ```
+Exemplo:
 
-  Esse atributo ajuda o JavaScript a saber qual tela deve ser preenchida.
+```html
+<body data-page="clientes">
+```
 
-  ### CSS
+Esse atributo ajuda o JavaScript a saber qual tela deve ser preenchida.
 
-  O arquivo `css/style.css` cuida da aparencia:
+### CSS
 
-  - cores;
-  - espacamentos;
-  - menu lateral;
-  - cards;
-  - tabelas;
-  - formularios;
-  - status visuais;
-  - layout responsivo para desktop e celular.
+O arquivo `css/style.css` cuida da aparencia:
 
-  O CSS esta dividido por secoes comentadas para facilitar o estudo.
+- cores;
+- espacamentos;
+- menu lateral;
+- cards;
+- tabelas;
+- formularios;
+- status visuais;
+- layout responsivo para desktop e celular.
 
-  ### JavaScript
+O CSS esta dividido por secoes comentadas para facilitar o estudo.
 
-  O arquivo `js/app.js` tem duas responsabilidades simples:
+### JavaScript
 
-  - guardar dados ficticios;
-  - preencher as telas com esses dados.
+O arquivo `js/app.js` tem algumas responsabilidades:
 
-  Ele tambem controla a abertura e o fechamento do menu no mobile.
+- guardar dados ficticios;
+- preencher as telas com esses dados;
+- controlar o menu no mobile;
+- validar e salvar clientes em `localStorage`.
 
-  ## Como alterar textos
+## Como alterar textos
 
-  Textos fixos, como titulos, descricoes e botoes, ficam diretamente nos arquivos HTML.
+Textos fixos, como titulos, descricoes e botoes, ficam diretamente nos arquivos HTML.
 
-  Exemplo no `index.html`:
+## Como alterar cores
 
-  ```html
-  <h1>Dashboard</h1>
-  <p>Acompanhe clientes, atendimentos pendentes e compromissos do dia.</p>
-  ```
+As cores principais ficam no inicio do arquivo `css/style.css`, dentro do bloco `:root`.
 
-  Para alterar esses textos, edite o arquivo HTML da tela correspondente.
+## Como alterar cards
 
-  ## Como alterar cores
+Os cards de resumo do Dashboard sao criados no arquivo `js/app.js`, dentro da funcao `preencherDashboard`.
 
-  As cores principais ficam no inicio do arquivo `css/style.css`, dentro do bloco `:root`.
+## Onde ficam os dados ficticios
 
-  Exemplo:
+Os dados ficticios ficam no topo do arquivo `js/app.js`.
 
-  ```css
-  :root {
-    --primary: #176b54;
-    --text: #1d2b24;
-    --bg: #f4f7f5;
-  }
-  ```
+Os principais arrays sao:
 
-  Para trocar a cor principal do sistema, altere o valor de `--primary`.
+- `clientes`;
+- `atendimentos`;
+- `agendamentos`;
+- `mensagens`.
 
-  ## Como alterar cards
+Os clientes carregam primeiro do `localStorage`. Se nao houver dados salvos, o prototipo usa os clientes iniciais como base.
 
-  Os cards de resumo do Dashboard sao criados no arquivo `js/app.js`, dentro da funcao `preencherDashboard`.
+## Como adicionar uma nova tela
 
-  Procure por:
+1. Copie uma pagina existente.
+2. Renomeie o arquivo.
+3. Altere o `title`, o `h1` e os textos.
+4. Troque o atributo `data-page`.
+5. Adicione o link no menu.
+6. Crie a funcao de renderizacao no `js/app.js`, se precisar.
 
-  ```js
-  const cards = [
-    { rotulo: "Total de clientes", valor: clientes.length }
-  ];
-  ```
+## O que estudar primeiro
 
-  Para mudar um card, altere o `rotulo` ou o `valor`.
+1. Comece pelo `index.html`.
+2. Depois leia `css/style.css`.
+3. Em seguida leia o topo de `js/app.js`.
+4. Depois estude `preencherClientes`.
+5. Por fim compare as outras funcoes de preenchimento.
 
-  ## Onde ficam os dados ficticios
+## Limites atuais do prototipo
 
-  Todos os dados ficticios ficam no topo do arquivo `js/app.js`.
+O prototipo ainda nao:
 
-  Os principais arrays sao:
+- faz login;
+- conecta com APIs;
+- usa banco de dados externo;
+- envia mensagens reais;
+- cria agendamentos reais.
 
-  - `clientes`;
-  - `atendimentos`;
-  - `agendamentos`;
-  - `mensagens`.
+## Mudanca importante ja concluida
 
-  Exemplo:
+O cadastro de clientes agora tem:
 
-  ```js
-  const clientes = [
-    {
-      nome: "Ana Souza",
-      telefone: "(11) 99999-0101",
-      origem: "WhatsApp",
-      observacoes: "Quer agendar corte e hidratacao."
-    }
-  ];
-  ```
-
-  Para adicionar um cliente ficticio, copie um bloco de cliente e altere os valores.
-
-  ## Como adicionar uma nova tela
-
-  Um caminho simples para criar uma nova tela:
-
-  1. Copie uma pagina existente, por exemplo `clientes.html`.
-  2. Renomeie o arquivo, por exemplo `relatorios.html`.
-  3. Altere o `title`, o `h1` e os textos da nova pagina.
-  4. Troque o atributo `data-page` para o nome da nova tela.
-  5. Adicione um novo link no menu de todas as paginas.
-  6. Se precisar de dados dinamicos, crie uma nova funcao no `js/app.js`.
-  7. Chame essa funcao dentro de `iniciarPaginaAtual`.
-
-  Exemplo:
-
-  ```js
-  if (pagina === "relatorios") preencherRelatorios();
-  ```
-
-  ## O que estudar primeiro
-
-  Recomendacao de estudo:
-
-  1. Comece pelo `index.html` para entender a estrutura basica de uma tela.
-  2. Depois leia `css/style.css` ate a parte de layout e cards.
-  3. Em seguida leia o topo do `js/app.js`, onde ficam os dados ficticios.
-  4. Depois estude a funcao `preencherDashboard`.
-  5. Por ultimo, compare as outras funcoes de preenchimento das telas.
-
-  Essa ordem ajuda a entender primeiro a estrutura, depois o visual e por fim o comportamento.
-
-  ## Limites atuais do prototipo
-
-  Este prototipo ainda nao:
-
-  - salva dados;
-  - valida formularios;
-  - faz login;
-  - conecta com APIs;
-  - usa banco de dados;
-  - envia mensagens reais;
-  - cria agendamentos reais.
-
-  Esses pontos devem ser tratados apenas depois que as telas e o fluxo do MVP forem validados.  
+- validacao basica;
+- mascara de telefone;
+- armazenamento local;
+- re-renderizacao da tabela;
+- feedback visual de sucesso e erro.

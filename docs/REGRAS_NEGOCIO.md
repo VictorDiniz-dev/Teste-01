@@ -1,4 +1,6 @@
-# Regras de Negócio do FluxoCRM
+# Regras de Negócio do FluxoCRM — Documento legado
+
+> **Status: legado.** Estas regras pertencem à concepção anterior baseada em atendimentos comerciais. As regras vigentes estão consolidadas em `DOCUMENTO_MESTRE.md`. O conteúdo abaixo foi preservado como histórico.
 
 ## Propósito
 Este documento define as regras básicas de operação do FluxoCRM para orientar a estrutura do produto e evitar ambiguidades no planejamento.

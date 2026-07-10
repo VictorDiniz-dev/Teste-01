@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda | FluxoCRM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="agenda">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div>
+          <strong>FluxoCRM</strong>
+          <small>Protótipo MVP</small>
+        </div>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="index.html">Dashboard</a>
+        <a class="active" href="agenda.html">Agenda</a>
+        <a href="solicitacoes.html">Solicitações</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="atendimentos.html">Atendimentos</a>
+        <a href="agendamentos.html">Agendamentos</a>
+        <a href="mensagens.html">Mensagens prontas</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Compromissos</p>
+          <h1>Agenda</h1>
+          <p>Visualize os agendamentos organizados por semana, data e horário.</p>
+        </div>
+      </header>
+
+      <section class="panel agenda-panel">
+        <div class="agenda-view-switcher" aria-label="Visualização da agenda">
+          <button class="action-button is-active" type="button" data-view="semanal" aria-pressed="true">Semanal</button>
+          <button class="action-button" type="button" data-view="mensal" aria-pressed="false">Mensal</button>
+        </div>
+
+        <div class="agenda-toolbar">
+          <div>
+            <p class="agenda-label" id="agenda-periodo-label">Semana exibida</p>
+            <h2 id="agenda-intervalo"></h2>
+          </div>
+          <div class="agenda-controls" aria-label="Navegação entre semanas">
+            <button class="action-button" id="semana-anterior" type="button">Semana anterior</button>
+            <button class="action-button" id="semana-atual" type="button">Hoje</button>
+            <button class="action-button" id="proxima-semana" type="button">Próxima semana</button>
+          </div>
+        </div>
+
+        <p class="form-notice" id="agenda-aviso" aria-live="polite"></p>
+        <div id="agenda-visao-semanal">
+          <p class="agenda-empty-week" id="agenda-vazia" hidden>Nenhum agendamento encontrado nesta semana.</p>
+          <div class="agenda-week" id="agenda-semana"></div>
+        </div>
+
+        <div id="agenda-visao-mensal" hidden>
+          <p class="agenda-empty-week" id="agenda-mes-vazio" hidden>Nenhum agendamento encontrado neste mês.</p>
+          <div class="agenda-month-weekdays" aria-hidden="true">
+            <span><span class="weekday-full">Segunda</span><span class="weekday-short">S</span></span>
+            <span><span class="weekday-full">Terça</span><span class="weekday-short">T</span></span>
+            <span><span class="weekday-full">Quarta</span><span class="weekday-short">Q</span></span>
+            <span><span class="weekday-full">Quinta</span><span class="weekday-short">Q</span></span>
+            <span><span class="weekday-full">Sexta</span><span class="weekday-short">S</span></span>
+            <span><span class="weekday-full">Sábado</span><span class="weekday-short">S</span></span>
+            <span><span class="weekday-full">Domingo</span><span class="weekday-short">D</span></span>
+          </div>
+          <div class="agenda-month-grid" id="agenda-mes-grade"></div>
+
+          <section class="agenda-selected-day" id="agenda-dia-selecionado" aria-live="polite">
+            <h3 id="agenda-dia-titulo"></h3>
+            <div class="agenda-selected-events" id="agenda-dia-lista"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel agenda-details" id="agenda-detalhes" hidden>
+        <div class="panel-header">
+          <h2>Detalhes do agendamento</h2>
+          <button class="action-button" id="fechar-detalhes" type="button">Fechar</button>
+        </div>
+        <dl class="details-grid" id="agenda-detalhes-conteudo"></dl>
+        <a class="action-link" href="agendamentos.html">Abrir Agendamentos</a>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/core/namespace.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/compartilhado/utilitarios.js"></script>
+  <script src="js/modelos/cliente.js"></script>
+  <script src="js/modelos/servico.js"></script>
+  <script src="js/modelos/agendamento.js"></script>
+  <script src="js/dados/dados-simulados.js"></script>
+  <script src="js/repositories/criarColecaoRepository.js"></script>
+  <script src="js/repositories/clientesRepository.js"></script>
+  <script src="js/repositories/servicosRepository.js"></script>
+  <script src="js/repositories/agendamentosRepository.js"></script>
+  <script src="js/modulos/menu.js"></script>
+  <script src="js/modulos/agenda.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

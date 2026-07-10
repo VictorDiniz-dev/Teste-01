@@ -2,12 +2,15 @@
   const solicitacoesRepository = FluxoCRM.repositories.solicitacoes;
   const clientesRepository = FluxoCRM.repositories.clientes;
   const servicosRepository = FluxoCRM.repositories.servicos;
+  const agendamentosRepository = FluxoCRM.repositories.agendamentos;
   const modelo = FluxoCRM.modelos.solicitacao;
+  const agendamentoModelo = FluxoCRM.modelos.agendamento;
   const { normalizarTexto } = FluxoCRM.compartilhado;
   const solicitacoes = solicitacoesRepository.listar();
   const clientes = clientesRepository.listar();
   const servicos = servicosRepository.listar();
   let idEmEdicao = null;
+  let idEmConversao = null;
 
   function obterDataAtual() {
     const agora = new Date();
@@ -129,15 +132,18 @@
     cliente.textContent = clienteRelacionado ? clienteRelacionado.nome : "Cliente não encontrado";
     servico.textContent = servicoRelacionado ? servicoRelacionado.nome : "Serviço não encontrado";
     dataPreferencial.textContent = formatarData(solicitacao.dataPreferencial);
-    selo.className = `status ${solicitacao.status === "cancelada" ? "status-cancelado" : "status-aguardando"}`;
-    selo.textContent = solicitacao.status === "cancelada" ? "Cancelada" : "Pendente";
+    const statusRotulos = { pendente: "Pendente", cancelada: "Cancelada", agendada: "Agendada" };
+    selo.className = `status ${solicitacao.status === "cancelada" ? "status-cancelado" : solicitacao.status === "agendada" ? "status-agendado" : "status-aguardando"}`;
+    selo.textContent = statusRotulos[solicitacao.status] || "Status desconhecido";
     status.appendChild(selo);
     dataCriacao.textContent = formatarDataHora(solicitacao.dataCriacao);
     grupo.className = "table-actions";
-    grupo.append(
-      criarBotao("Editar", "editar"),
-      criarBotao(solicitacao.status === "cancelada" ? "Reabrir" : "Cancelar", "alternar-status")
-    );
+    grupo.appendChild(criarBotao("Editar", "editar"));
+    if (solicitacao.status === "pendente") {
+      grupo.append(criarBotao("Agendar", "agendar"), criarBotao("Cancelar", "alternar-status"));
+    } else if (solicitacao.status === "cancelada") {
+      grupo.appendChild(criarBotao("Reabrir", "alternar-status"));
+    }
     acoes.appendChild(grupo);
     linha.append(cliente, servico, dataPreferencial, status, dataCriacao, acoes);
     return linha;
@@ -270,6 +276,11 @@
         return;
       }
 
+      if (botao.dataset.acao === "agendar") {
+        iniciarConversao(solicitacao);
+        return;
+      }
+
       const cancelando = solicitacao.status !== "cancelada";
       if (cancelando && !window.confirm("Deseja cancelar esta solicitação?")) return;
       solicitacao.status = cancelando ? "cancelada" : "pendente";
@@ -282,6 +293,90 @@
     });
   }
 
+  function horarioValido(valor) {
+    return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(valor);
+  }
+
+  function mostrarFeedbackConversao(mensagem, tipo) {
+    const feedback = document.getElementById("conversao-feedback");
+    feedback.textContent = mensagem;
+    feedback.dataset.status = tipo;
+  }
+
+  function encerrarConversao() {
+    idEmConversao = null;
+    document.getElementById("form-conversao").reset();
+    document.getElementById("painel-conversao").hidden = true;
+    mostrarFeedbackConversao("", "");
+  }
+
+  function iniciarConversao(solicitacao) {
+    if (solicitacao.status !== "pendente") {
+      mostrarFeedback("Esta solicitação já foi agendada ou não está disponível para conversão.", "erro");
+      return;
+    }
+    const cliente = localizarCliente(solicitacao.clienteId);
+    const servico = localizarServico(solicitacao.servicoId);
+    idEmConversao = solicitacao.id;
+    document.getElementById("conversao-contexto").textContent = `${cliente ? cliente.nome : "Cliente não encontrado"} — ${servico ? servico.nome : "Serviço não encontrado"}`;
+    document.getElementById("data-agendamento").value = solicitacao.dataPreferencial || "";
+    document.getElementById("data-agendamento").min = obterDataAtual();
+    document.getElementById("horario-agendamento").value = "";
+    document.getElementById("painel-conversao").hidden = false;
+    mostrarFeedbackConversao("", "");
+    document.getElementById("horario-agendamento").focus();
+  }
+
+  function configurarConversao() {
+    document.getElementById("fechar-conversao").addEventListener("click", encerrarConversao);
+    document.getElementById("form-conversao").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const solicitacao = solicitacoes.find((item) => item.id === idEmConversao);
+      if (!solicitacao || solicitacao.status !== "pendente") {
+        mostrarFeedbackConversao("Esta solicitação já foi agendada ou não está disponível para conversão.", "erro");
+        return;
+      }
+      const cliente = localizarCliente(solicitacao.clienteId);
+      const servico = localizarServico(solicitacao.servicoId);
+      const data = document.getElementById("data-agendamento").value;
+      const horario = document.getElementById("horario-agendamento").value;
+      if (!cliente) return mostrarFeedbackConversao("Cliente não encontrado.", "erro");
+      if (!servico) return mostrarFeedbackConversao("Serviço não encontrado.", "erro");
+      if (!servico.ativo) return mostrarFeedbackConversao("O serviço vinculado está inativo.", "erro");
+      if (!dataIsoValida(data) || data < obterDataAtual()) return mostrarFeedbackConversao("Selecione uma data válida.", "erro");
+      if (!horarioValido(horario)) return mostrarFeedbackConversao("Selecione um horário válido.", "erro");
+
+      const agendamentos = agendamentosRepository.listar();
+      const novoAgendamento = agendamentoModelo.criar({
+        clienteId: solicitacao.clienteId,
+        servicoId: solicitacao.servicoId,
+        data,
+        horario,
+        status: "agendado"
+      });
+      agendamentos.push(novoAgendamento);
+      if (!agendamentosRepository.salvarTodos(agendamentos)) {
+        agendamentos.pop();
+        mostrarFeedbackConversao("Não foi possível criar o agendamento.", "erro");
+        return;
+      }
+
+      const statusAnterior = solicitacao.status;
+      solicitacao.status = "agendada";
+      if (!solicitacoesRepository.salvarTodos(solicitacoes)) {
+        solicitacao.status = statusAnterior;
+        const semNovoAgendamento = agendamentos.filter((item) => item.id !== novoAgendamento.id);
+        agendamentosRepository.salvarTodos(semNovoAgendamento);
+        mostrarFeedbackConversao("Não foi possível concluir a conversão.", "erro");
+        return;
+      }
+
+      renderizar();
+      encerrarConversao();
+      mostrarFeedback("Solicitação convertida em agendamento com sucesso.", "sucesso");
+    });
+  }
+
   function iniciar() {
     preencherClientes();
     preencherServicos();
@@ -289,6 +384,7 @@
     atualizarPreRequisitos();
     configurarFormulario();
     configurarListagem();
+    configurarConversao();
     renderizar();
   }
 

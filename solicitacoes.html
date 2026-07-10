@@ -21,9 +21,10 @@
 
       <nav class="main-nav" aria-label="Navegação principal">
         <a href="index.html">Dashboard</a>
+        <a href="agenda.html">Agenda</a>
+        <a class="active" href="solicitacoes.html">Solicitações</a>
         <a href="clientes.html">Clientes</a>
         <a href="servicos.html">Serviços</a>
-        <a class="active" href="solicitacoes.html">Solicitações</a>
         <a href="atendimentos.html">Atendimentos</a>
         <a href="agendamentos.html">Agendamentos</a>
         <a href="mensagens.html">Mensagens prontas</a>
@@ -99,6 +100,26 @@
           </form>
         </article>
       </section>
+
+      <section class="panel conversion-panel" id="painel-conversao" hidden>
+        <div class="panel-header">
+          <h2>Converter em agendamento</h2>
+          <button class="action-button" id="fechar-conversao" type="button">Fechar</button>
+        </div>
+        <p id="conversao-contexto"></p>
+        <form class="simple-form conversion-form" id="form-conversao" novalidate>
+          <label>
+            Data
+            <input id="data-agendamento" type="date" required>
+          </label>
+          <label>
+            Horário
+            <input id="horario-agendamento" type="time" required>
+          </label>
+          <button class="secondary-button" type="submit">Criar agendamento</button>
+          <p class="form-feedback" id="conversao-feedback" aria-live="polite"></p>
+        </form>
+      </section>
     </main>
   </div>
 
@@ -108,11 +129,13 @@
   <script src="js/modelos/cliente.js"></script>
   <script src="js/modelos/servico.js"></script>
   <script src="js/modelos/solicitacao.js"></script>
+  <script src="js/modelos/agendamento.js"></script>
   <script src="js/dados/dados-simulados.js"></script>
   <script src="js/repositories/criarColecaoRepository.js"></script>
   <script src="js/repositories/clientesRepository.js"></script>
   <script src="js/repositories/servicosRepository.js"></script>
   <script src="js/repositories/solicitacoesRepository.js"></script>
+  <script src="js/repositories/agendamentosRepository.js"></script>
   <script src="js/modulos/menu.js"></script>
   <script src="js/modulos/solicitacoes.js"></script>
   <script src="js/app.js"></script>

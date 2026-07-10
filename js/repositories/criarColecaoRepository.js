@@ -26,8 +26,9 @@
     }
 
     function salvarTodos(lista) {
-      cache = normalizarLista(lista);
-      armazenamento.salvar(cache);
+      const dadosNormalizados = normalizarLista(lista);
+      if (!armazenamento.salvar(dadosNormalizados)) return null;
+      cache = dadosNormalizados;
       return cache;
     }
 

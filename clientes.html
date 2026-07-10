@@ -38,7 +38,7 @@
           <h1>Clientes</h1>
           <p>Consulte contatos cadastrados e visualize um formulário simples de novo cliente.</p>
         </div>
-        <button class="primary-button" type="button">Novo cliente</button>
+        <button class="primary-button" id="novo-cliente" type="button">Novo cliente</button>
       </header>
 
       <section class="content-grid two-columns reverse-mobile">
@@ -71,12 +71,12 @@
           <form class="simple-form" id="form-cliente">
             <label>
               Nome
-              <input type="text" placeholder="Ex.: Ana Souza" id="nome-cliente">
+              <input type="text" placeholder="Ex.: Ana Souza" id="nome-cliente" required autocomplete="name">
             </label>
 
             <label>
               Telefone
-              <input type="tel" placeholder="Ex.: (11) 99999-0000" id="telefone-cliente" maxlength="15" inputmode="numeric">
+              <input type="tel" placeholder="Ex.: (11) 99999-0000" id="telefone-cliente" maxlength="15" inputmode="numeric" required autocomplete="tel">
             </label>
 
             <label>
@@ -95,7 +95,7 @@
               <textarea rows="5" placeholder="Preferências, contexto do contato ou histórico inicial" id="observacoes-cliente"></textarea>
             </label>
 
-            <button class="secondary-button" type="submit">Salvar rascunho visual</button>
+            <button class="secondary-button" type="submit">Cadastrar cliente</button>
             <p class="form-feedback" id="clientes-feedback" aria-live="polite"></p>
           </form>
         </article>

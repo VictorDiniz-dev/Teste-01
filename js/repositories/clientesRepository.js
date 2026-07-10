@@ -5,6 +5,6 @@
     chave: "fluxocrm_clientes",
     normalizar: modelo.criar,
     validar: modelo.valido,
-    dadosIniciais: FluxoCRM.dados.clientesIniciais
+    dadosIniciais: []
   });
 })(window.FluxoCRM);

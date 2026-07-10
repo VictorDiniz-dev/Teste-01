@@ -1,90 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | FluxoCRM</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="dashboard">
-  <div class="app-layout">
-    <!-- Menu lateral usado no desktop e adaptado para o topo no mobile. -->
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark">F</span>
-        <div>
-          <strong>FluxoCRM</strong>
-          <small>Protótipo MVP</small>
-        </div>
-      </div>
-
-      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
-
-      <nav class="main-nav" aria-label="Navegação principal">
-        <a class="active" href="index.html">Dashboard</a>
-        <a href="agenda.html">Agenda</a>
-        <a href="solicitacoes.html">Solicitações</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
-        <a href="atendimentos.html">Atendimentos</a>
-        <a href="agendamentos.html">Agendamentos</a>
-        <a href="mensagens.html">Mensagens prontas</a>
-      </nav>
-    </aside>
-
-    <main class="main-content">
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">Visão geral</p>
-          <h1>Dashboard</h1>
-          <p>Acompanhe clientes, atendimentos pendentes e compromissos do dia.</p>
-        </div>
-        <button class="primary-button" type="button">Novo atendimento</button>
-      </header>
-
-      <!-- Os cards são preenchidos pelo arquivo js/app.js com dados fictícios. -->
-      <section class="summary-grid" id="summaryCards" aria-label="Resumo do dia"></section>
-
-      <section class="content-grid two-columns">
-        <article class="panel">
-          <div class="panel-header">
-            <h2>Próximos atendimentos</h2>
-            <span class="panel-count" id="nextTicketsCount">0 itens</span>
-          </div>
-          <div class="simple-list" id="nextTicketsList"></div>
-        </article>
-
-        <article class="panel">
-          <div class="panel-header">
-            <h2>Agendamentos do dia</h2>
-            <span class="panel-count" id="todayAppointmentsCount">0 itens</span>
-          </div>
-          <div class="simple-list" id="todayAppointmentsList"></div>
-        </article>
-      </section>
-    </main>
-  </div>
-
-  <script src="js/core/namespace.js"></script>
-  <script src="js/core/storage.js"></script>
-  <script src="js/compartilhado/utilitarios.js"></script>
-  <script src="js/compartilhado/status.js"></script>
-  <script src="js/modelos/cliente.js"></script>
-  <script src="js/modelos/servico.js"></script>
-  <script src="js/modelos/solicitacao.js"></script>
-  <script src="js/modelos/agendamento.js"></script>
-  <script src="js/dados/dados-simulados.js"></script>
-  <script src="js/repositories/criarColecaoRepository.js"></script>
-  <script src="js/repositories/clientesRepository.js"></script>
-  <script src="js/repositories/servicosRepository.js"></script>
-  <script src="js/repositories/solicitacoesRepository.js"></script>
-  <script src="js/repositories/agendamentosRepository.js"></script>
-  <script src="js/modulos/menu.js"></script>
-  <script src="js/modulos/clientes.js"></script>
-  <script src="js/modulos/dashboard.js"></script>
-  <script src="js/modulos/atendimentos.js"></script>
-  <script src="js/modulos/agendamentos.js"></script>
-  <script src="js/modulos/mensagens.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Visão Geral | FluxoCRM</title><link rel="stylesheet" href="css/style.css"></head>
+<body data-page="dashboard"><div class="app-layout"><aside class="sidebar"></aside><main class="main-content">
+<header class="page-header dashboard-header"><div><p class="eyebrow">Visão Geral</p><h1>Visão Geral</h1><p id="dashboard-greeting">Acompanhe as solicitações e os agendamentos do seu negócio.</p></div><div class="header-actions"><a class="secondary-button" href="agenda.html">Abrir agenda</a><a class="primary-button" href="solicitacoes.html">Nova solicitação</a></div></header>
+<section class="summary-grid" id="summaryCards" aria-label="Indicadores da operação"></section>
+<section class="dashboard-primary-grid"><article class="panel today-panel"><div class="panel-header"><div><p class="eyebrow">Prioridade</p><h2>Agenda de hoje</h2></div><span class="panel-count" id="todayAppointmentsCount">0 itens</span></div><div class="schedule-list" id="todayAppointmentsList"></div></article><div class="dashboard-side-stack"><article class="panel accent-panel"><div class="panel-header"><h2>Próximo compromisso</h2></div><div class="next-appointment" id="nextAppointment"></div></article><article class="panel quick-actions"><div class="panel-header"><h2>Ações rápidas</h2></div><div class="quick-action-grid"><a href="solicitacoes.html">＋ <span>Nova solicitação</span></a><a href="clientes.html">＋ <span>Novo cliente</span></a><a href="servicos.html">＋ <span>Novo serviço</span></a><a href="agenda.html">↗ <span>Abrir agenda</span></a></div></article></div></section>
+<section class="dashboard-secondary-grid"><article class="panel"><div class="panel-header"><div><h2>Próximos 7 dias</h2><p>Volume diário de agendamentos</p></div></div><div class="activity-chart" id="activityChart" role="img" aria-label="Agendamentos por dia nos próximos sete dias"></div><p class="sr-only" id="activityDescription"></p></article><article class="panel"><div class="panel-header"><h2>Solicitações pendentes</h2><span class="panel-count" id="pendingRequestsCount">0 pendentes</span></div><div class="request-list" id="pendingRequestsList"></div><a class="action-link" href="solicitacoes.html">Ver solicitações</a></article></section>
+<aside class="data-alert" id="dataAlerts" hidden aria-live="polite"><strong>Dados que precisam de atenção</strong><p></p></aside>
+</main></div>
+<script src="js/core/namespace.js"></script><script src="js/core/storage.js"></script><script src="js/compartilhado/utilitarios.js"></script><script src="js/modelos/cliente.js"></script><script src="js/modelos/servico.js"></script><script src="js/modelos/solicitacao.js"></script><script src="js/modelos/agendamento.js"></script><script src="js/dados/dados-simulados.js"></script><script src="js/repositories/criarColecaoRepository.js"></script><script src="js/repositories/clientesRepository.js"></script><script src="js/repositories/servicosRepository.js"></script><script src="js/repositories/solicitacoesRepository.js"></script><script src="js/repositories/agendamentosRepository.js"></script><script src="js/modulos/menu.js"></script><script src="js/modulos/dashboard.js"></script><script src="js/app.js"></script></body></html>

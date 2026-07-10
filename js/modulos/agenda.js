@@ -303,9 +303,33 @@
     renderizarDiaSelecionado(grupos);
   }
 
+  function criarLinhaLista(agendamento) {
+    const linha = document.createElement("tr");
+    const cliente = obterCliente(agendamento.clienteId);
+    const servico = obterServico(agendamento.servicoId);
+    const data = criarDataLocal(agendamento.data);
+    const valores = [cliente ? cliente.nome : "Cliente não encontrado", servico ? servico.nome : "Serviço não encontrado", data ? new Intl.DateTimeFormat("pt-BR").format(data) : "Data inválida", horarioValido(agendamento.horario) ? agendamento.horario : "Horário inválido"];
+    valores.forEach((texto) => { const celula = document.createElement("td"); celula.textContent = texto; linha.appendChild(celula); });
+    const celulaStatus = document.createElement("td"); const selo = document.createElement("span"); selo.className = `status ${classeStatus(agendamento.status)}`; selo.textContent = formatarStatus(agendamento.status); celulaStatus.appendChild(selo); linha.appendChild(celulaStatus);
+    return linha;
+  }
+
+  function renderizarLista() {
+    const termo = document.getElementById("agenda-busca").value.trim().toLocaleLowerCase("pt-BR");
+    const filtroStatus = document.getElementById("agenda-status").value;
+    const filtroServico = document.getElementById("agenda-servico").value;
+    const registros = [...agendamentosRepository.listar()].filter((item) => {
+      const cliente = obterCliente(item.clienteId);
+      return (!termo || (cliente?.nome || "Cliente não encontrado").toLocaleLowerCase("pt-BR").includes(termo)) && (!filtroStatus || String(item.status).toLocaleLowerCase("pt-BR") === filtroStatus) && (!filtroServico || item.servicoId === filtroServico);
+    }).sort((a,b) => String(a.data).localeCompare(String(b.data)) || String(a.horario).localeCompare(String(b.horario)));
+    document.getElementById("agenda-lista").replaceChildren(...registros.map(criarLinhaLista));
+    document.getElementById("agenda-lista-vazia").hidden = registros.length > 0;
+  }
+
   function atualizarControles() {
     const mensal = visualizacaoAtual === "mensal";
-    document.getElementById("agenda-periodo-label").textContent = mensal ? "Mês exibido" : "Semana exibida";
+    const lista = visualizacaoAtual === "lista";
+    document.getElementById("agenda-periodo-label").textContent = lista ? "Todos os registros" : mensal ? "Mês exibido" : "Semana exibida";
     document.getElementById("semana-anterior").textContent = mensal ? "Mês anterior" : "Semana anterior";
     document.getElementById("proxima-semana").textContent = mensal ? "Próximo mês" : "Próxima semana";
     document.querySelectorAll("[data-view]").forEach((botao) => {
@@ -318,13 +342,17 @@
   function renderizarAgenda() {
     const { grupos, possuiInvalidos } = agruparAgendamentos();
     const mensal = visualizacaoAtual === "mensal";
-    document.getElementById("agenda-visao-semanal").hidden = mensal;
+    const lista = visualizacaoAtual === "lista";
+    document.getElementById("agenda-visao-semanal").hidden = mensal || lista;
     document.getElementById("agenda-visao-mensal").hidden = !mensal;
-    document.getElementById("agenda-intervalo").textContent = mensal ? formatarMes(mesExibido) : formatarIntervalo(inicioSemanaExibida);
+    document.getElementById("agenda-visao-lista").hidden = !lista;
+    document.querySelector(".agenda-controls").hidden = lista;
+    document.getElementById("agenda-intervalo").textContent = lista ? `${agendamentosRepository.listar().length} agendamento(s)` : mensal ? formatarMes(mesExibido) : formatarIntervalo(inicioSemanaExibida);
     document.getElementById("agenda-aviso").textContent = possuiInvalidos ? "Existem agendamentos com dados inválidos que não puderam ser exibidos." : "";
     document.getElementById("agenda-aviso").dataset.status = possuiInvalidos ? "erro" : "";
     atualizarControles();
-    if (mensal) renderizarMes(grupos);
+    if (lista) renderizarLista();
+    else if (mensal) renderizarMes(grupos);
     else renderizarSemana(grupos);
   }
 
@@ -358,6 +386,11 @@
     document.getElementById("fechar-detalhes").addEventListener("click", () => {
       document.getElementById("agenda-detalhes").hidden = true;
     });
+    const filtroServico = document.getElementById("agenda-servico");
+    servicos.forEach((servico) => { const opcao = document.createElement("option"); opcao.value = servico.id; opcao.textContent = servico.nome; filtroServico.appendChild(opcao); });
+    document.getElementById("agenda-busca").addEventListener("input", renderizarLista);
+    document.getElementById("agenda-status").addEventListener("change", renderizarLista);
+    filtroServico.addEventListener("change", renderizarLista);
   }
 
   function iniciar() {

@@ -122,6 +122,7 @@
   function iniciar() {
     configurarFormulario();
     renderizar();
+    document.getElementById("novo-cliente")?.addEventListener("click", () => document.getElementById("nome-cliente")?.focus());
   }
 
   FluxoCRM.modulos.clientes = {

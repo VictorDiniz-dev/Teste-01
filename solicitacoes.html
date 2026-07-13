@@ -3,129 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FluxoCRM — Solicitações de atendimento: registre, acompanhe e converta em agendamentos.">
   <title>Solicitações | FluxoCRM</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="solicitacoes">
-  <div class="app-layout">
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark">F</span>
-        <div>
-          <strong>FluxoCRM</strong>
-          <small>Protótipo MVP</small>
+
+  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout" id="app-layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+      <div class="sidebar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">F</span>
+          <div class="brand-text">
+            <span class="brand-name">FluxoCRM</span>
+            <span class="brand-tagline">Gestão de atendimento</span>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+          <span class="nav-group-label">Principal</span>
+          <a class="nav-item" id="nav-item-dashboard" href="index.html">
+            <span class="nav-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+            <span class="nav-item-label">Visão Geral</span>
+          </a>
+          <a class="nav-item" id="nav-item-agenda" href="agenda.html">
+            <span class="nav-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+            <span class="nav-item-label">Agenda</span>
+          </a>
+          <a class="nav-item active" id="nav-item-solicitacoes" href="solicitacoes.html" aria-current="page">
+            <span class="nav-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+            <span class="nav-item-label">Solicitações</span>
+          </a>
+        </nav>
+
+        <nav class="main-nav" aria-label="Gestão">
+          <span class="nav-group-label">Gestão</span>
+          <a class="nav-item" id="nav-item-clientes" href="clientes.html">
+            <span class="nav-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="nav-item-label">Clientes</span>
+          </a>
+          <a class="nav-item" id="nav-item-servicos" href="servicos.html">
+            <span class="nav-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></span>
+            <span class="nav-item-label">Serviços</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="sidebar-collapse-btn" id="sidebar-collapse-btn" type="button" aria-expanded="true" aria-label="Recolher menu lateral">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 5 12 12 19"/></svg>
+            <span class="nav-item-label">Recolher menu</span>
+          </button>
         </div>
       </div>
-
-      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
-
-      <nav class="main-nav" aria-label="Navegação principal">
-        <a href="index.html">Dashboard</a>
-        <a href="agenda.html">Agenda</a>
-        <a class="active" href="solicitacoes.html">Solicitações</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
-        <a href="atendimentos.html">Atendimentos</a>
-        <a href="agendamentos.html">Agendamentos</a>
-        <a href="mensagens.html">Mensagens prontas</a>
-      </nav>
     </aside>
 
-    <main class="main-content">
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">Atendimento</p>
-          <h1>Solicitações</h1>
-          <p>Registre e acompanhe os pedidos de atendimento dos clientes.</p>
-        </div>
-        <button class="primary-button" id="nova-solicitacao" type="button">Nova solicitação</button>
-      </header>
+    <!-- ── Conteúdo ── -->
+    <div style="min-width:0; display:flex; flex-direction:column;">
+      <div class="mobile-topbar" role="banner">
+        <button class="menu-toggle" id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" aria-label="Abrir menu de navegação">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="topbar-brand">
+          <span aria-hidden="true" style="width:24px;height:24px;background:var(--color-primary);border-radius:4px;display:grid;place-items:center;color:#0f1117;font-weight:800;font-size:12px;">F</span>
+          FluxoCRM
+        </span>
+      </div>
 
-      <section class="content-grid two-columns reverse-mobile">
-        <article class="panel">
-          <div class="panel-header">
-            <h2>Solicitações cadastradas</h2>
-            <span class="panel-count" id="solicitacoes-contador">0 solicitações</span>
+      <main class="main-content" id="main-content" tabindex="-1">
+
+        <header class="page-header">
+          <div class="page-header-info">
+            <span class="page-eyebrow">Atendimento</span>
+            <h1>Solicitações</h1>
+            <p class="page-header-desc">Registre e acompanhe os pedidos de atendimento. Pedidos pendentes podem ser convertidos em agendamentos.</p>
           </div>
-          <div class="responsive-table">
-            <table class="wide-table">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Serviço</th>
-                  <th>Data preferencial</th>
-                  <th>Status</th>
-                  <th>Data de criação</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody id="solicitacoes-lista"></tbody>
-            </table>
+          <div class="page-header-actions">
+            <button class="btn btn-primary" id="nova-solicitacao" type="button">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nova solicitação
+            </button>
           </div>
-        </article>
+        </header>
 
-        <article class="panel form-panel">
-          <div class="panel-header">
-            <h2 id="solicitacao-form-titulo">Nova solicitação</h2>
-          </div>
+        <!-- Listagem + formulário lado a lado -->
+        <div class="content-grid two-columns reverse-mobile">
 
-          <form class="simple-form" id="form-solicitacao" novalidate>
-            <p class="form-notice" id="solicitacoes-pre-requisitos" aria-live="polite"></p>
-
-            <label>
-              Cliente
-              <select id="cliente-solicitacao" required></select>
-            </label>
-
-            <label>
-              Serviço
-              <select id="servico-solicitacao" required></select>
-            </label>
-
-            <label>
-              Data preferencial
-              <input id="data-preferencial" type="date" required>
-            </label>
-
-            <label>
-              Observações
-              <textarea id="observacoes-solicitacao" rows="5" maxlength="500" placeholder="Preferências ou contexto do pedido"></textarea>
-            </label>
-
-            <div class="form-actions">
-              <button class="secondary-button" id="salvar-solicitacao" type="submit">Cadastrar solicitação</button>
-              <button class="text-button" id="cancelar-edicao-solicitacao" type="button" hidden>Cancelar edição</button>
+          <!-- Listagem -->
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Solicitações cadastradas</h2>
+              <span class="panel-count" id="solicitacoes-contador">0 solicitações</span>
             </div>
-            <p class="form-feedback" id="solicitacoes-feedback" aria-live="polite"></p>
-          </form>
-        </article>
-      </section>
+            <div class="responsive-table panel-body-flush">
+              <table class="wide-table" aria-label="Lista de solicitações">
+                <thead>
+                  <tr>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Serviço</th>
+                    <th scope="col">Data preferencial</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Criação</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="solicitacoes-lista"></tbody>
+              </table>
+            </div>
+          </article>
 
-      <section class="panel conversion-panel" id="painel-conversao" hidden>
-        <div class="panel-header">
-          <h2>Converter em agendamento</h2>
-          <button class="action-button" id="fechar-conversao" type="button">Fechar</button>
+          <!-- Formulário -->
+          <article class="panel form-panel">
+            <div class="panel-header">
+              <h2 id="solicitacao-form-titulo">Nova solicitação</h2>
+            </div>
+            <div class="panel-body">
+              <form class="simple-form" id="form-solicitacao" novalidate aria-label="Formulário de solicitação">
+                <p class="form-notice" id="solicitacoes-pre-requisitos" aria-live="polite"></p>
+
+                <label>
+                  Cliente <span aria-hidden="true" style="color:var(--color-danger)">*</span>
+                  <select id="cliente-solicitacao" required aria-required="true" aria-describedby="solicitacoes-feedback"></select>
+                </label>
+
+                <label>
+                  Serviço <span aria-hidden="true" style="color:var(--color-danger)">*</span>
+                  <select id="servico-solicitacao" required aria-required="true"></select>
+                </label>
+
+                <label>
+                  Data preferencial <span aria-hidden="true" style="color:var(--color-danger)">*</span>
+                  <input id="data-preferencial" type="date" required aria-required="true">
+                </label>
+
+                <label>
+                  Observações
+                  <textarea id="observacoes-solicitacao" rows="4" maxlength="500"
+                    placeholder="Preferências ou contexto do pedido (opcional)"></textarea>
+                </label>
+
+                <div class="form-actions">
+                  <button class="secondary-button" id="salvar-solicitacao" type="submit">Cadastrar solicitação</button>
+                  <button class="text-button" id="cancelar-edicao-solicitacao" type="button" hidden>Cancelar edição</button>
+                </div>
+                <p class="form-feedback" id="solicitacoes-feedback" aria-live="polite" role="status"></p>
+              </form>
+            </div>
+          </article>
+
         </div>
-        <p id="conversao-contexto"></p>
-        <form class="simple-form conversion-form" id="form-conversao" novalidate>
-          <label>
-            Data
-            <input id="data-agendamento" type="date" required>
-          </label>
-          <label>
-            Horário
-            <input id="horario-agendamento" type="time" required>
-          </label>
-          <button class="secondary-button" type="submit">Criar agendamento</button>
-          <p class="form-feedback" id="conversao-feedback" aria-live="polite"></p>
-        </form>
-      </section>
-    </main>
+
+        <!-- Painel de conversão -->
+        <section class="panel conversion-panel" id="painel-conversao" hidden aria-label="Converter solicitação em agendamento">
+          <div class="panel-header">
+            <h2>Converter em agendamento</h2>
+            <button class="action-button" id="fechar-conversao" type="button" aria-label="Fechar painel de conversão">Fechar</button>
+          </div>
+          <div class="panel-body">
+            <p id="conversao-contexto" style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-4);"></p>
+            <form class="simple-form conversion-form" id="form-conversao" novalidate aria-label="Formulário de conversão para agendamento">
+              <label>
+                Data <span aria-hidden="true" style="color:var(--color-danger)">*</span>
+                <input id="data-agendamento" type="date" required aria-required="true">
+              </label>
+              <label>
+                Horário <span aria-hidden="true" style="color:var(--color-danger)">*</span>
+                <input id="horario-agendamento" type="time" required aria-required="true">
+              </label>
+              <button class="secondary-button" type="submit">Criar agendamento</button>
+              <p class="form-feedback" id="conversao-feedback" aria-live="assertive" role="alert"></p>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
   </div>
 
   <script src="js/core/namespace.js"></script>
   <script src="js/core/storage.js"></script>
   <script src="js/compartilhado/utilitarios.js"></script>
+  <script src="js/compartilhado/status.js"></script>
+  <script src="js/compartilhado/datas.js"></script>
   <script src="js/modelos/cliente.js"></script>
   <script src="js/modelos/servico.js"></script>
   <script src="js/modelos/solicitacao.js"></script>

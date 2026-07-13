@@ -3,72 +3,229 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | FluxoCRM</title>
+  <meta name="description" content="FluxoCRM — Visão geral da operação: agendamentos, solicitações pendentes e próximos compromissos.">
+  <title>Visão Geral | FluxoCRM</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="dashboard">
-  <div class="app-layout">
-    <!-- Menu lateral usado no desktop e adaptado para o topo no mobile. -->
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark">F</span>
-        <div>
-          <strong>FluxoCRM</strong>
-          <small>Protótipo MVP</small>
+
+  <!-- Overlay mobile -->
+  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout" id="app-layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+      <div class="sidebar-inner">
+
+        <!-- Marca -->
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">F</span>
+          <div class="brand-text">
+            <span class="brand-name">FluxoCRM</span>
+            <span class="brand-tagline">Gestão de atendimento</span>
+          </div>
         </div>
+
+        <!-- Grupo principal -->
+        <nav class="main-nav" aria-label="Navegação principal">
+          <span class="nav-group-label">Principal</span>
+
+          <a class="nav-item" id="nav-item-dashboard" href="index.html"
+             aria-current="page">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            </span>
+            <span class="nav-item-label">Visão Geral</span>
+          </a>
+
+          <a class="nav-item" id="nav-item-agenda" href="agenda.html">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <span class="nav-item-label">Agenda</span>
+          </a>
+
+          <a class="nav-item" id="nav-item-solicitacoes" href="solicitacoes.html">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </span>
+            <span class="nav-item-label">Solicitações</span>
+          </a>
+        </nav>
+
+        <!-- Grupo gestão -->
+        <nav class="main-nav" aria-label="Gestão">
+          <span class="nav-group-label">Gestão</span>
+
+          <a class="nav-item" id="nav-item-clientes" href="clientes.html">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <span class="nav-item-label">Clientes</span>
+          </a>
+
+          <a class="nav-item" id="nav-item-servicos" href="servicos.html">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            </span>
+            <span class="nav-item-label">Serviços</span>
+          </a>
+        </nav>
+
+        <!-- Rodapé da sidebar -->
+        <div class="sidebar-footer">
+          <button class="sidebar-collapse-btn" id="sidebar-collapse-btn"
+                  type="button" aria-expanded="true" aria-label="Recolher menu lateral">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 5 12 12 19"/></svg>
+            <span class="nav-item-label">Recolher menu</span>
+          </button>
+        </div>
+
       </div>
-
-      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
-
-      <nav class="main-nav" aria-label="Navegação principal">
-        <a class="active" href="index.html">Dashboard</a>
-        <a href="agenda.html">Agenda</a>
-        <a href="solicitacoes.html">Solicitações</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
-        <a href="atendimentos.html">Atendimentos</a>
-        <a href="agendamentos.html">Agendamentos</a>
-        <a href="mensagens.html">Mensagens prontas</a>
-      </nav>
     </aside>
 
-    <main class="main-content">
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">Visão geral</p>
-          <h1>Dashboard</h1>
-          <p>Acompanhe clientes, atendimentos pendentes e compromissos do dia.</p>
+    <!-- ── Conteúdo principal ── -->
+    <div style="min-width:0; display: flex; flex-direction: column;">
+
+      <!-- Topbar mobile -->
+      <div class="mobile-topbar" role="banner">
+        <button class="menu-toggle" id="mobile-menu-toggle" type="button"
+                aria-expanded="false" aria-controls="sidebar"
+                aria-label="Abrir menu de navegação">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="topbar-brand">
+          <span aria-hidden="true" style="width:24px;height:24px;background:var(--color-primary);border-radius:4px;display:grid;place-items:center;color:#0f1117;font-weight:800;font-size:12px;">F</span>
+          FluxoCRM
+        </span>
+      </div>
+
+      <main class="main-content" id="main-content" tabindex="-1">
+
+        <!-- Cabeçalho -->
+        <header class="page-header" role="banner">
+          <div class="page-header-info">
+            <span class="page-greeting" id="dashboard-saudacao" aria-live="polite"></span>
+            <span class="page-eyebrow">Visão Geral</span>
+            <h1>Dashboard</h1>
+            <p class="page-header-desc">Acompanhe as solicitações e os agendamentos do seu negócio.</p>
+          </div>
+          <div class="page-header-actions">
+            <span class="page-date" id="dashboard-data" aria-live="polite"></span>
+            <a href="solicitacoes.html" class="btn btn-primary">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nova solicitação
+            </a>
+          </div>
+        </header>
+
+        <!-- Alertas inteligentes -->
+        <div id="dashboard-alertas" hidden aria-live="polite"></div>
+
+        <!-- Metric cards -->
+        <section id="dashboard-metrics" class="metric-grid" aria-label="Indicadores principais">
+          <!-- Preenchido pelo JS -->
+        </section>
+
+        <!-- Grid principal -->
+        <div class="content-grid two-columns" style="margin-bottom: var(--space-5);">
+
+          <!-- Agenda de hoje -->
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Agenda de hoje</h2>
+              <a href="agenda.html" class="section-link">Ver agenda →</a>
+            </div>
+            <div class="panel-body" id="dashboard-agenda-hoje">
+              <!-- Preenchido pelo JS -->
+            </div>
+          </article>
+
+          <!-- Coluna direita -->
+          <div style="display: grid; gap: var(--space-4); align-content: start;">
+
+            <!-- Próximo compromisso -->
+            <article class="panel">
+              <div class="panel-header">
+                <h2>Próximo compromisso</h2>
+              </div>
+              <div class="panel-body" id="dashboard-proximo" style="padding-top: 0;">
+                <!-- Preenchido pelo JS -->
+              </div>
+            </article>
+
+            <!-- Ações rápidas -->
+            <article class="panel">
+              <div class="panel-header">
+                <h2>Ações rápidas</h2>
+              </div>
+              <div class="panel-body" id="dashboard-acoes">
+                <!-- Preenchido pelo JS -->
+              </div>
+            </article>
+
+          </div>
         </div>
-        <button class="primary-button" type="button">Novo atendimento</button>
-      </header>
 
-      <!-- Os cards são preenchidos pelo arquivo js/app.js com dados fictícios. -->
-      <section class="summary-grid" id="summaryCards" aria-label="Resumo do dia"></section>
+        <!-- Grid inferior -->
+        <div class="content-grid two-columns">
 
-      <section class="content-grid two-columns">
-        <article class="panel">
-          <div class="panel-header">
-            <h2>Próximos atendimentos</h2>
-            <span class="panel-count" id="nextTicketsCount">0 itens</span>
+          <!-- Gráfico de atividade -->
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Atividade — últimos 7 dias</h2>
+              <span class="panel-count">agendamentos por dia</span>
+            </div>
+            <div class="panel-body">
+              <div class="chart-container" id="dashboard-grafico" aria-label="Gráfico de agendamentos por dia"></div>
+              <div id="dashboard-grafico-tabela" style="margin-top: var(--space-3);">
+                <!-- Tabela alternativa acessível —  preenchida pelo JS -->
+              </div>
+            </div>
+          </article>
+
+          <!-- Distribuição de solicitações + pendentes -->
+          <div style="display: grid; gap: var(--space-4); align-content: start;">
+
+            <article class="panel">
+              <div class="panel-header">
+                <h2>Solicitações por status</h2>
+              </div>
+              <div class="panel-body">
+                <div class="donut-row">
+                  <div class="donut-chart-wrap" id="dashboard-rosca" aria-label="Gráfico de rosca — solicitações por status"></div>
+                  <div class="donut-legend" id="dashboard-rosca-legenda">
+                    <!-- Preenchido pelo JS -->
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <h2>Solicitações pendentes</h2>
+                <a href="solicitacoes.html" class="section-link">Ver todas →</a>
+              </div>
+              <div class="panel-body" id="dashboard-pendentes">
+                <!-- Preenchido pelo JS -->
+              </div>
+            </article>
+
           </div>
-          <div class="simple-list" id="nextTicketsList"></div>
-        </article>
+        </div>
 
-        <article class="panel">
-          <div class="panel-header">
-            <h2>Agendamentos do dia</h2>
-            <span class="panel-count" id="todayAppointmentsCount">0 itens</span>
-          </div>
-          <div class="simple-list" id="todayAppointmentsList"></div>
-        </article>
-      </section>
-    </main>
+      </main>
+    </div>
   </div>
 
+  <!-- Scripts — ordem preservada -->
   <script src="js/core/namespace.js"></script>
   <script src="js/core/storage.js"></script>
   <script src="js/compartilhado/utilitarios.js"></script>
   <script src="js/compartilhado/status.js"></script>
+  <script src="js/compartilhado/datas.js"></script>
+  <script src="js/compartilhado/graficos.js"></script>
   <script src="js/modelos/cliente.js"></script>
   <script src="js/modelos/servico.js"></script>
   <script src="js/modelos/solicitacao.js"></script>
@@ -80,11 +237,7 @@
   <script src="js/repositories/solicitacoesRepository.js"></script>
   <script src="js/repositories/agendamentosRepository.js"></script>
   <script src="js/modulos/menu.js"></script>
-  <script src="js/modulos/clientes.js"></script>
   <script src="js/modulos/dashboard.js"></script>
-  <script src="js/modulos/atendimentos.js"></script>
-  <script src="js/modulos/agendamentos.js"></script>
-  <script src="js/modulos/mensagens.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

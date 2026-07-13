@@ -78,6 +78,19 @@
     const feedback = document.getElementById("clientes-feedback");
     if (!formulario || !campoTelefone || !feedback) return;
 
+    // Botão "Novo cliente" no cabeçalho da página → rola e foca no formulário
+    const btnHeader = document.getElementById("btn-novo-cliente-header");
+    if (btnHeader) {
+      btnHeader.addEventListener("click", () => {
+        const painel = document.getElementById("painel-form-cliente");
+        if (painel) painel.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => {
+          const campoNome = document.getElementById("nome-cliente");
+          if (campoNome) campoNome.focus();
+        }, 200);
+      });
+    }
+
     campoTelefone.addEventListener("input", () => {
       campoTelefone.value = formatarTelefone(campoTelefone.value);
     });
@@ -115,7 +128,7 @@
       renderizar();
       formulario.reset();
       campoTelefone.focus();
-      mostrarFeedback(feedback, "Cliente salvo com sucesso.", "sucesso");
+      mostrarFeedback(feedback, "Cliente cadastrado com sucesso.", "sucesso");
     });
   }
 

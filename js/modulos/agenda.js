@@ -305,9 +305,15 @@
 
   function atualizarControles() {
     const mensal = visualizacaoAtual === "mensal";
-    document.getElementById("agenda-periodo-label").textContent = mensal ? "Mês exibido" : "Semana exibida";
-    document.getElementById("semana-anterior").textContent = mensal ? "Mês anterior" : "Semana anterior";
-    document.getElementById("proxima-semana").textContent = mensal ? "Próximo mês" : "Próxima semana";
+    const lista = visualizacaoAtual === "lista";
+    const labelPeriodo = document.getElementById("agenda-periodo-label");
+    const btnAnterior = document.getElementById("semana-anterior");
+    const btnProxima = document.getElementById("proxima-semana");
+    if (labelPeriodo) labelPeriodo.textContent = mensal ? "Mês exibido" : lista ? "Todos os agendamentos" : "Semana exibida";
+    if (btnAnterior) btnAnterior.hidden = lista;
+    if (btnProxima) btnProxima.hidden = lista;
+    if (btnAnterior) btnAnterior.textContent = mensal ? "Mês anterior" : "Semana anterior";
+    if (btnProxima) btnProxima.textContent = mensal ? "Próximo mês" : "Próxima semana";
     document.querySelectorAll("[data-view]").forEach((botao) => {
       const ativo = botao.dataset.view === visualizacaoAtual;
       botao.classList.toggle("is-active", ativo);
@@ -315,16 +321,127 @@
     });
   }
 
+  /* ── Visualização Lista ── */
+
+  function renderizarLista() {
+    const container = document.getElementById("agenda-visao-lista");
+    if (!container) return;
+
+    const filtroStatus = document.getElementById("lista-filtro-status");
+    const filtroBusca = document.getElementById("lista-filtro-busca");
+    const tabela = document.getElementById("agenda-lista-tabela");
+    if (!tabela) return;
+
+    const statusFiltro = filtroStatus ? filtroStatus.value : "";
+    const buscaFiltro = filtroBusca ? filtroBusca.value.toLowerCase().trim() : "";
+
+    const agendamentos = agendamentosRepository.listar();
+    let filtrados = [...agendamentos];
+
+    // Filtrar por status
+    if (statusFiltro) {
+      filtrados = filtrados.filter((a) => String(a.status || "").toLocaleLowerCase("pt-BR") === statusFiltro);
+    }
+
+    // Filtrar por busca (nome de cliente)
+    if (buscaFiltro) {
+      filtrados = filtrados.filter((a) => {
+        const cliente = obterCliente(a.clienteId);
+        return cliente && cliente.nome.toLowerCase().includes(buscaFiltro);
+      });
+    }
+
+    // Ordenar por data e horário
+    filtrados.sort((a, b) => {
+      const dc = String(a.data || "").localeCompare(String(b.data || ""));
+      if (dc !== 0) return dc;
+      return String(a.horario || "").localeCompare(String(b.horario || ""));
+    });
+
+    tabela.replaceChildren();
+
+    if (filtrados.length === 0) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 5;
+      td.className = "agenda-list-empty";
+      td.textContent = statusFiltro || buscaFiltro
+        ? "Nenhum agendamento corresponde aos filtros aplicados."
+        : "Nenhum agendamento encontrado.";
+      tr.appendChild(td);
+      tabela.appendChild(tr);
+      return;
+    }
+
+    filtrados.forEach((ag) => {
+      const linha = document.createElement("tr");
+      const clienteRel = obterCliente(ag.clienteId);
+      const servicoRel = obterServico(ag.servicoId);
+
+      const tdCliente = document.createElement("td");
+      const tdServico = document.createElement("td");
+      const tdData = document.createElement("td");
+      const tdHorario = document.createElement("td");
+      const tdStatus = document.createElement("td");
+
+      tdCliente.textContent = clienteRel ? clienteRel.nome : "Cliente não encontrado";
+      if (!clienteRel) tdCliente.style.color = "var(--color-danger)";
+
+      tdServico.textContent = servicoRel ? servicoRel.nome : "Serviço não encontrado";
+      if (!servicoRel) tdServico.style.color = "var(--color-danger)";
+      if (servicoRel && !servicoRel.ativo) {
+        const aviso = document.createElement("small");
+        aviso.className = "agenda-inactive-service";
+        aviso.textContent = " (inativo)";
+        tdServico.appendChild(aviso);
+      }
+
+      const dataObj = criarDataLocal(ag.data);
+      tdData.textContent = dataObj ? new Intl.DateTimeFormat("pt-BR").format(dataObj) : "Data inválida";
+      if (!dataObj) tdData.style.color = "var(--color-danger)";
+
+      tdHorario.textContent = horarioValido(ag.horario) ? ag.horario : "Horário inválido";
+      if (!horarioValido(ag.horario)) tdHorario.style.color = "var(--color-danger)";
+
+      const selo = document.createElement("span");
+      selo.className = `status ${classeStatus(ag.status)}`;
+      selo.textContent = formatarStatus(ag.status);
+      tdStatus.appendChild(selo);
+
+      linha.append(tdCliente, tdServico, tdData, tdHorario, tdStatus);
+      tabela.appendChild(linha);
+    });
+  }
+
+  function configurarFiltrosLista() {
+    const filtroStatus = document.getElementById("lista-filtro-status");
+    const filtroBusca = document.getElementById("lista-filtro-busca");
+    if (filtroStatus) filtroStatus.addEventListener("change", renderizarLista);
+    if (filtroBusca) filtroBusca.addEventListener("input", renderizarLista);
+  }
+
   function renderizarAgenda() {
     const { grupos, possuiInvalidos } = agruparAgendamentos();
     const mensal = visualizacaoAtual === "mensal";
-    document.getElementById("agenda-visao-semanal").hidden = mensal;
-    document.getElementById("agenda-visao-mensal").hidden = !mensal;
-    document.getElementById("agenda-intervalo").textContent = mensal ? formatarMes(mesExibido) : formatarIntervalo(inicioSemanaExibida);
-    document.getElementById("agenda-aviso").textContent = possuiInvalidos ? "Existem agendamentos com dados inválidos que não puderam ser exibidos." : "";
-    document.getElementById("agenda-aviso").dataset.status = possuiInvalidos ? "erro" : "";
+    const lista = visualizacaoAtual === "lista";
+    const semanalEl = document.getElementById("agenda-visao-semanal");
+    const mensalEl = document.getElementById("agenda-visao-mensal");
+    const listaEl = document.getElementById("agenda-visao-lista");
+    if (semanalEl) semanalEl.hidden = mensal || lista;
+    if (mensalEl) mensalEl.hidden = !mensal || lista;
+    if (listaEl) listaEl.hidden = !lista;
+    const intervaloEl = document.getElementById("agenda-intervalo");
+    if (intervaloEl) {
+      intervaloEl.textContent = lista ? "Todos os agendamentos" : mensal ? formatarMes(mesExibido) : formatarIntervalo(inicioSemanaExibida);
+    }
+    const avisoEl = document.getElementById("agenda-aviso");
+    if (avisoEl) {
+      avisoEl.textContent = possuiInvalidos ? "Existem agendamentos com dados inválidos que não puderam ser exibidos." : "";
+      avisoEl.dataset.status = possuiInvalidos ? "erro" : "";
+    }
     atualizarControles();
-    if (mensal) renderizarMes(grupos);
+    if (lista) renderizarLista();
+    else if (mensal) renderizarMes(grupos);
     else renderizarSemana(grupos);
   }
 
@@ -335,17 +452,21 @@
         renderizarAgenda();
       });
     });
-    document.getElementById("semana-anterior").addEventListener("click", () => {
+    const btnAnterior = document.getElementById("semana-anterior");
+    const btnProxima = document.getElementById("proxima-semana");
+    const btnHoje = document.getElementById("semana-atual");
+    const btnFechar = document.getElementById("fechar-detalhes");
+    if (btnAnterior) btnAnterior.addEventListener("click", () => {
       if (visualizacaoAtual === "mensal") mesExibido = adicionarMeses(mesExibido, -1);
       else inicioSemanaExibida = adicionarDias(inicioSemanaExibida, -7);
       renderizarAgenda();
     });
-    document.getElementById("proxima-semana").addEventListener("click", () => {
+    if (btnProxima) btnProxima.addEventListener("click", () => {
       if (visualizacaoAtual === "mensal") mesExibido = adicionarMeses(mesExibido, 1);
       else inicioSemanaExibida = adicionarDias(inicioSemanaExibida, 7);
       renderizarAgenda();
     });
-    document.getElementById("semana-atual").addEventListener("click", () => {
+    if (btnHoje) btnHoje.addEventListener("click", () => {
       const hoje = new Date();
       if (visualizacaoAtual === "mensal") {
         mesExibido = primeiroDiaMes(hoje);
@@ -355,13 +476,14 @@
       }
       renderizarAgenda();
     });
-    document.getElementById("fechar-detalhes").addEventListener("click", () => {
+    if (btnFechar) btnFechar.addEventListener("click", () => {
       document.getElementById("agenda-detalhes").hidden = true;
     });
   }
 
   function iniciar() {
     configurarControles();
+    configurarFiltrosLista();
     renderizarAgenda();
   }
 

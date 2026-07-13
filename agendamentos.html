@@ -3,86 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FluxoCRM — Lista de agendamentos. Esta página foi incorporada à Agenda.">
   <title>Agendamentos | FluxoCRM</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Redireciona automaticamente para a agenda na aba Lista após 3 segundos -->
+  <meta http-equiv="refresh" content="3;url=agenda.html">
 </head>
-<body data-page="agendamentos">
-  <div class="app-layout">
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark">F</span>
-        <div>
-          <strong>FluxoCRM</strong>
-          <small>Protótipo MVP</small>
-        </div>
-      </div>
+<body data-page="agendamentos" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--color-bg);">
 
-      <button class="menu-toggle" type="button" aria-label="Abrir menu">Menu</button>
+  <div style="max-width:480px;text-align:center;padding:var(--space-7);">
+    <div style="width:60px;height:60px;background:var(--color-primary-soft);border:1px solid var(--color-primary-border);border-radius:var(--radius-lg);display:grid;place-items:center;margin:0 auto var(--space-5);">
+      <svg width="28" height="28" fill="none" stroke="var(--color-primary)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+    </div>
 
-      <nav class="main-nav" aria-label="Navegação principal">
-        <a href="index.html">Dashboard</a>
-        <a href="agenda.html">Agenda</a>
-        <a href="solicitacoes.html">Solicitações</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
-        <a href="atendimentos.html">Atendimentos</a>
-        <a class="active" href="agendamentos.html">Agendamentos</a>
-        <a href="mensagens.html">Mensagens prontas</a>
-      </nav>
-    </aside>
+    <h1 style="font-size:var(--text-xl);font-weight:var(--weight-bold);color:var(--color-text);margin-bottom:var(--space-3);">
+      Página incorporada à Agenda
+    </h1>
 
-    <main class="main-content">
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">Compromissos</p>
-          <h1>Agendamentos</h1>
-          <p>Organize serviço, data, horário e status de cada compromisso.</p>
-        </div>
-      </header>
+    <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7;margin-bottom:var(--space-6);">
+      A lista de agendamentos agora faz parte da <strong>Agenda</strong>, na visualização <em>Lista</em>.
+      Você será redirecionado automaticamente em instantes.
+    </p>
 
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Lista de agendamentos</h2>
-          <span class="panel-count" id="appointmentsCount">0 agendamentos</span>
-        </div>
-        <div class="responsive-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Cliente</th>
-                <th>Serviço</th>
-                <th>Data</th>
-                <th>Horário</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="appointmentsTable"></tbody>
-          </table>
-        </div>
-      </section>
-    </main>
+    <div style="display:flex;flex-direction:column;gap:var(--space-3);align-items:center;">
+      <a href="agenda.html" class="btn btn-primary" style="width:100%;max-width:260px;justify-content:center;">
+        Ir para a Agenda agora →
+      </a>
+      <a href="index.html" style="color:var(--color-text-subtle);font-size:var(--text-xs);">
+        Ou voltar ao Dashboard
+      </a>
+    </div>
   </div>
 
-  <script src="js/core/namespace.js"></script>
-  <script src="js/core/storage.js"></script>
-  <script src="js/compartilhado/utilitarios.js"></script>
-  <script src="js/compartilhado/status.js"></script>
-  <script src="js/modelos/cliente.js"></script>
-  <script src="js/modelos/servico.js"></script>
-  <script src="js/modelos/solicitacao.js"></script>
-  <script src="js/modelos/agendamento.js"></script>
-  <script src="js/dados/dados-simulados.js"></script>
-  <script src="js/repositories/criarColecaoRepository.js"></script>
-  <script src="js/repositories/clientesRepository.js"></script>
-  <script src="js/repositories/servicosRepository.js"></script>
-  <script src="js/repositories/solicitacoesRepository.js"></script>
-  <script src="js/repositories/agendamentosRepository.js"></script>
-  <script src="js/modulos/menu.js"></script>
-  <script src="js/modulos/clientes.js"></script>
-  <script src="js/modulos/dashboard.js"></script>
-  <script src="js/modulos/atendimentos.js"></script>
-  <script src="js/modulos/agendamentos.js"></script>
-  <script src="js/modulos/mensagens.js"></script>
-  <script src="js/app.js"></script>
 </body>
 </html>
